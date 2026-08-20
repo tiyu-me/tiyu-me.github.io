@@ -233,6 +233,52 @@
     .contact { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
     .contact a { text-decoration: none; }
     .tiny { color: var(--muted); font-size: 12px; }
+    .secret-entry {
+      position: fixed;
+      right: 10px;
+      bottom: 8px;
+      z-index: 20;
+      width: 26px;
+      height: 26px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      color: var(--violet);
+      background: transparent;
+      opacity: .22;
+      cursor: pointer;
+      font-size: 15px;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    .secret-entry:hover, .secret-entry:focus-visible { opacity: .9; transform: rotate(18deg) scale(1.12); }
+    .secret-dialog {
+      width: min(390px, calc(100% - 32px));
+      padding: 0;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      color: var(--ink);
+      background: var(--paper);
+      box-shadow: 0 30px 90px rgba(35,33,58,.25);
+    }
+    .secret-dialog::backdrop { background: rgba(35,33,58,.38); backdrop-filter: blur(6px); }
+    .secret-form { padding: 32px; }
+    .secret-form h2 { margin: 8px 0 10px; font-size: 29px; }
+    .secret-form p { margin: 0 0 20px; color: var(--muted); }
+    .secret-form label { display: block; margin-bottom: 7px; font: 700 12px/1.2 ui-rounded, "PingFang SC", sans-serif; }
+    .secret-form input {
+      width: 100%;
+      padding: 13px 15px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      color: var(--ink);
+      background: #fff;
+      font: 600 16px/1.2 ui-rounded, "PingFang SC", sans-serif;
+      outline: none;
+    }
+    .secret-form input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(102,89,167,.12); }
+    .secret-error { min-height: 22px; margin: 8px 0 0 !important; color: #84577a !important; font-size: 13px; }
+    .secret-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 18px; }
+    .secret-actions button { cursor: pointer; }
 
     @media (max-width: 800px) {
       nav a:not(:last-child) { display: none; }
@@ -318,15 +364,48 @@
       <div class="tiny">2026银河系狗熊大使于地球制作</div>
     </footer>
   </div>
-  <!-- Cloudflare Web Analytics -->
-  <script
-       type='module'
-       src='https://static.cloudflareinsights.com/beacon.min.js'
-      data-cf-beacon='{"token": "792346ec54f34da180512e2c7349e6a2"}'>
+  <button class="secret-entry" id="secret-entry" type="button" aria-label="打开隐藏入口" title="">✦</button>
+  <dialog class="secret-dialog" id="secret-dialog">
+    <form class="secret-form" id="secret-form">
+      <div class="eyebrow">Quiet corner</div>
+      <h2>这里有一扇小门</h2>
+      <p>报出暗号，熊才会开门。</p>
+      <label for="secret-password">暗号</label>
+      <input id="secret-password" name="password" type="password" inputmode="numeric" autocomplete="off" required>
+      <p class="secret-error" id="secret-error" role="status" aria-live="polite"></p>
+      <div class="secret-actions">
+        <button class="chip" id="secret-cancel" type="button">先不进去</button>
+        <button class="chip primary" type="submit">敲门 🐾</button>
+      </div>
+    </form>
+  </dialog>
+  <script>
+    const secretEntry = document.querySelector('#secret-entry');
+    const secretDialog = document.querySelector('#secret-dialog');
+    const secretForm = document.querySelector('#secret-form');
+    const secretPassword = document.querySelector('#secret-password');
+    const secretError = document.querySelector('#secret-error');
+    secretEntry.addEventListener('click', () => {
+      secretError.textContent = '';
+      secretPassword.value = '';
+      secretDialog.showModal();
+      setTimeout(() => secretPassword.focus(), 50);
+    });
+    document.querySelector('#secret-cancel').addEventListener('click', () => secretDialog.close());
+    secretDialog.addEventListener('click', (event) => {
+      if (event.target === secretDialog) secretDialog.close();
+    });
+    secretForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (secretPassword.value === '021103') {
+        sessionStorage.setItem('bearArchive', 'open');
+        window.location.href = 'quiet.html';
+      } else {
+        secretError.textContent = '暗号不对，熊没有听懂。';
+        secretPassword.select();
+      }
+    });
   </script>
-  <!-- End Cloudflare Web Analytics -->
-
-  
 </body>
 </html>
 
