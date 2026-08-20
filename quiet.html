@@ -6,9 +6,6 @@
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#24213f">
   <title>熊的安静角落</title>
-  <script>
-    if (sessionStorage.getItem('bearArchive') !== 'open') window.location.replace('index.html');
-  </script>
   <style>
     :root{--ink:#23213a;--paper:#f5f1e8;--violet:#6b5fac;--line:rgba(35,33,58,.14);--muted:#747184}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 86% 5%,rgba(126,164,197,.22),transparent 25rem),radial-gradient(circle at 3% 45%,rgba(231,202,133,.18),transparent 23rem),var(--paper);font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;line-height:1.9}
@@ -22,16 +19,51 @@
   <div class="shell">
     <header class="top"><div class="mark">✦ 熊的安静角落</div><a class="back" href="index.html">回到外面</a></header>
     <main>
-      <section class="hero"><div class="eyebrow">Private notes · 请轻声阅读</div><h1>一些没有放在<br>明面上的文字</h1><p>这里离热闹稍微远一点。短文会一篇篇住进来，在此之前，先把窗户和椅子摆好。</p></section>
-      <section class="essays" aria-label="短文列表">
-        <article class="essay"><div class="number">TEXT · 01</div><h2>未命名短文一</h2><p>这篇短文还在路上。等熊写完以后，可以把这段占位文字完整替换掉。</p></article>
-        <article class="essay"><div class="number">TEXT · 02</div><h2>未命名短文二</h2><p>这里适合放一篇稍短的随笔：一个瞬间、一种情绪，或者一个没有答案的问题。</p></article>
-        <article class="essay"><div class="number">TEXT · 03</div><h2>未命名短文三</h2><p>这里已经留好了位置。标题和正文都可以继续增加，卡片也会跟着内容自然变高。</p></article>
-        <article class="essay"><div class="number">TEXT · 04</div><h2>未命名短文四</h2><p>最后一个展位暂时空着，等待一篇只想给知道暗号的人看的文字。</p></article>
-      </section>
+      <section class="hero"><div class="eyebrow">Private notes · 请轻声阅读</div><h1>一些没有放在<br>明面上的文字</h1><p id="archive-intro">正在辨认暗号……</p></section>
+      <section class="essays" id="essay-list" aria-label="短文列表"></section>
     </main>
     <footer><span>© 2026 银河系狗熊大使</span><span>访问资格只在当前浏览器标签页内保留。</span></footer>
   </div>
+  <script>
+    const encryptedArchive = {
+      salt: 'OHIDrO220YgLLxwlS7TPNw==',
+      iv: 'NZNyroXKAld7+OFt',
+      data: 'pE1KuKA3nYRrNO7RM8KLEmUCv6lPbtyQs/CZQ6AoTlufUHBbfDRphPyKUbLRKHSunLagGS/9xk5XtwCSA2rhntcNjqkF5OCzGVcmHZpQQywNaXuRekya8Ib7yiwD6KY9bp8u8B0iuIK/C0gOgpdsT/EjJ1HVUZnd4FAL65HRmDu2WKls5dRu2ZKXh7ALLwZrrr825/ZoYZfEE8/RBCn7dcG/SatT15oyKh9Yf0sWrvn1GfUw0nfA9q+JAJ25J1eVo/+Y+TWHjpMVyEpRG1pv+teyBCqWL5+1cYu662xT39fBPe4EIBlsdz2ANHM2qhlnEUaVnpzAG69vOrJxrEKWMR6kR4jLA6NV5tKN8x630nSymjIr1UOZ9ccuC7Nx7yj/spyWI2ZvxL5xcxq+jpvkdlX+Oqp5Rxcv5wlOOAo3KweQ0aBX9RNumjgG4RtAldh7merzbWQhai8cjyqWMSEwYMCvpidjtsXPMIgOdc1NQSDRyD8MaMm3z5SgItCYoVKckVtS/UwkkGanx+ciEEBKsEODTLX3KJehoXTXQ8MvzddyJYAyRyzc51wwQMbfGRkl8x7aQ3r4oFydLp5rDcNXTz/B0SHXnuaInKmqOP8HhHw4pM/K5aKVeyFrs0JHjRZVTkaFdHotS0mizpoFoXztMXeYZ1hwlStUPEEikmR59wPuoyq9P8qI0op38JtCedGU1YB8mOnuLA8Ze6e45ZS4R00YXnbfoAqGdqxtDVB550XUq6Bml7Gi3pS85Cng3j8J86yDGHGq9NrZEYPtw6bwIhzKp+EqsamYUWSJgJvK7wxgiMVWXi3zhGcPmcDVxLMZYQKx4UzPXcn4dxFzLgYk1RlrD1k='
+    };
+    const fromBase64 = value => Uint8Array.from(atob(value), char => char.charCodeAt(0));
+    async function openArchive() {
+      const password = sessionStorage.getItem('bearArchivePassword');
+      if (!password) return window.location.replace('index.html');
+      try {
+        const encoder = new TextEncoder();
+        const baseKey = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
+        const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: fromBase64(encryptedArchive.salt), iterations: 250000, hash: 'SHA-256' }, baseKey, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+        const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromBase64(encryptedArchive.iv) }, key, fromBase64(encryptedArchive.data));
+        const archive = JSON.parse(new TextDecoder().decode(plain));
+        document.querySelector('#archive-intro').textContent = archive.intro;
+        const list = document.querySelector('#essay-list');
+        archive.essays.forEach(([title, body], index) => {
+          const article = document.createElement('article');
+          article.className = 'essay';
+          const number = document.createElement('div');
+          number.className = 'number';
+          number.textContent = `TEXT · ${String(index + 1).padStart(2, '0')}`;
+          const heading = document.createElement('h2');
+          heading.textContent = title;
+          const paragraph = document.createElement('p');
+          paragraph.textContent = body;
+          article.append(number, heading, paragraph);
+          list.append(article);
+        });
+        sessionStorage.removeItem('bearArchivePassword');
+      } catch {
+        sessionStorage.removeItem('bearArchivePassword');
+        sessionStorage.setItem('bearArchiveError', '1');
+        window.location.replace('index.html');
+      }
+    }
+    openArchive();
+  </script>
 </body>
 </html>
 
