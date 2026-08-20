@@ -397,14 +397,15 @@
     });
     secretForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      if (secretPassword.value === '021103') {
-        sessionStorage.setItem('bearArchive', 'open');
-        window.location.href = 'quiet.html';
-      } else {
-        secretError.textContent = '暗号不对，熊没有听懂。';
-        secretPassword.select();
-      }
+      sessionStorage.setItem('bearArchivePassword', secretPassword.value);
+      window.location.href = 'quiet.html';
     });
+    if (sessionStorage.getItem('bearArchiveError') === '1') {
+      sessionStorage.removeItem('bearArchiveError');
+      secretDialog.showModal();
+      secretError.textContent = '暗号不对，熊没有听懂。';
+      setTimeout(() => secretPassword.focus(), 50);
+    }
   </script>
 </body>
 </html>
