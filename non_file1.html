@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6057a6">
+  <title>这里放第一篇文章标题 · 银河系狗熊大使</title>
+  <style>
+    :root {
+      --ink:#23213a; --muted:#706e83; --paper:#f7f4ee; --card:rgba(255,255,255,.72);
+      --line:rgba(35,33,58,.13); --violet:#6659a7; --blue:#7da8c9; --yellow:#f0c96d;
+      --shadow:0 22px 60px rgba(49,43,84,.10);
+    }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      margin:0; color:var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(125,168,201,.22), transparent 25rem),
+        radial-gradient(circle at 88% 18%, rgba(240,201,109,.22), transparent 22rem),
+        var(--paper);
+      font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
+      line-height:1.85;
+    }
+    a { color:inherit; }
+    .shell { width:min(900px,calc(100% - 36px)); margin:auto; }
+    .topbar {
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      padding:24px 0;
+    }
+    .brand {
+      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
+      font-family:ui-rounded,"PingFang SC",sans-serif; font-weight:750; letter-spacing:.03em;
+    }
+    .bear-dot {
+      display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--line);
+      border-radius:15px 15px 18px 18px; background:#fff9; box-shadow:0 6px 18px rgba(49,43,84,.08);
+      transform:rotate(-4deg);
+    }
+    .right-tools { display:flex; align-items:center; gap:10px; }
+    .chip {
+      border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.55);
+      padding:8px 14px; text-decoration:none; font:600 13px/1.2 ui-rounded,"PingFang SC",sans-serif;
+    }
+    .lang-switch {
+      display:inline-flex; align-items:center; gap:6px; padding:4px 7px; border:1px solid var(--line);
+      border-radius:999px; background:rgba(255,255,255,.55);
+      font:700 12px/1 ui-rounded,"PingFang SC",sans-serif;
+    }
+    .lang-switch button {
+      border:0; padding:4px 6px; border-radius:999px; color:var(--muted); background:transparent;
+      cursor:pointer; font:inherit;
+    }
+    .lang-switch button.active { color:#fff; background:var(--ink); }
+    article {
+      margin:44px 0 90px; padding:clamp(30px,7vw,72px);
+      border:1px solid var(--line); border-radius:34px; background:var(--card);
+      box-shadow:var(--shadow); backdrop-filter:blur(14px);
+    }
+    .eyebrow {
+      display:inline-flex; gap:8px; align-items:center; color:var(--violet);
+      font:700 13px/1.2 ui-rounded,"PingFang SC",sans-serif; letter-spacing:.15em; text-transform:uppercase;
+    }
+    .eyebrow::before { content:""; width:28px; height:2px; background:currentColor; }
+    h1 {
+      margin:20px 0 14px; font-size:clamp(38px,7vw,66px); line-height:1.08; letter-spacing:-.04em;
+    }
+    .meta { color:var(--muted); font:600 13px/1.5 ui-rounded,"PingFang SC",sans-serif; margin-bottom:42px; }
+    .article-body { font-size:18px; }
+    .article-body p { margin:0 0 1.35em; }
+    .article-body h2 { margin:2.2em 0 .7em; font-size:28px; line-height:1.3; }
+    .placeholder-box {
+      margin:34px 0; padding:22px 24px; border:1px dashed rgba(102,89,167,.35);
+      border-radius:20px; background:rgba(102,89,167,.05); color:var(--muted);
+    }
+    .article-nav {
+      display:flex; justify-content:space-between; gap:12px; margin-top:52px; padding-top:24px;
+      border-top:1px solid var(--line);
+    }
+    footer {
+      display:flex; justify-content:space-between; gap:20px; padding:18px 0 48px;
+      border-top:1px solid var(--line); color:var(--muted);
+      font:600 12px/1.5 ui-rounded,"PingFang SC",sans-serif;
+    }
+    @media (max-width:650px) {
+      .topbar { align-items:flex-start; }
+      .right-tools { flex-wrap:wrap; justify-content:flex-end; }
+      article { margin-top:22px; }
+      .article-nav { flex-direction:column; }
+      footer { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" data-aria-zh="返回主页" data-aria-en="Back home" aria-label="返回主页">
+        <span class="bear-dot">🐾</span> tiyu.me
+      </a>
+      <div class="right-tools">
+        <a class="chip" href="index.html#work" data-zh="← 返回作品柜" data-en="← Back to work">← 返回作品柜</a>
+        <span class="lang-switch" aria-label="语言切换">
+          <button type="button" data-set-lang="zh">中</button><span>/</span><button type="button" data-set-lang="en">EN</button>
+        </span>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <div class="eyebrow">Non-paper writing · 01</div>
+        <h1 data-zh="这里放第一篇文章标题" data-en="Put your first title here">这里放第一篇文章标题</h1>
+        <div class="meta">
+          <span data-zh="2026 · 银河系狗熊大使" data-en="2026 · Galactic Bear Ambassador">2026 · 银河系狗熊大使</span>
+        </div>
+
+        <div class="article-body">
+          <p data-zh="这里是文章正文的位置。你可以直接把这一段替换成你的文章。" data-en="This is where the article begins. You can replace this paragraph with your own writing.">这里是文章正文的位置。你可以直接把这一段替换成你的文章。</p>
+
+          <div class="placeholder-box">
+            <span data-zh="建议：一段文字对应一个 &lt;p&gt;…&lt;/p&gt;。需要小标题时使用 &lt;h2&gt;…&lt;/h2&gt;。页面已经替你做好排版。" data-en="Tip: use one &lt;p&gt;…&lt;/p&gt; per paragraph, and &lt;h2&gt;…&lt;/h2&gt; for section headings. The page styling is already in place.">建议：一段文字对应一个 &lt;p&gt;…&lt;/p&gt;。需要小标题时使用 &lt;h2&gt;…&lt;/h2&gt;。页面已经替你做好排版。</span>
+          </div>
+
+          <h2 data-zh="一个小标题" data-en="A small heading">一个小标题</h2>
+          <p data-zh="这里继续写正文。之后如果你把真实文章内容发给我，我可以直接替你排进这些页面里。" data-en="Continue the article here. If you give me the actual text later, it can be placed directly into this layout.">这里继续写正文。之后如果你把真实文章内容发给我，我可以直接替你排进这些页面里。</p>
+        </div>
+
+        <nav class="article-nav">
+          <span></span>
+          <a class="chip" href="article-02.html" data-zh="下一篇 →" data-en="Next →">下一篇 →</a>
+        </nav>
+      </article>
+    </main>
+
+    <footer>
+      <span data-zh="银河系狗熊大使的非论文写作" data-en="Non-paper writing by the Galactic Bear Ambassador">银河系狗熊大使的非论文写作</span>
+      <span>tiyu.me</span>
+    </footer>
+  </div>
+
+  <script>
+    const languageButtons = document.querySelectorAll('[data-set-lang]');
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-zh][data-en]').forEach((el) => {
+        el.textContent = el.dataset[lang];
+      });
+      document.querySelectorAll('[data-aria-zh][data-aria-en]').forEach((el) => {
+        el.setAttribute('aria-label', lang === 'zh' ? el.dataset.ariaZh : el.dataset.ariaEn);
+      });
+      languageButtons.forEach((button) => {
+        const active = button.dataset.setLang === lang;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      document.title = lang === 'zh'
+        ? '这里放第一篇文章标题 · 银河系狗熊大使'
+        : 'Put your first title here · Galactic Bear Ambassador';
+      localStorage.setItem('siteLanguage', lang);
+    }
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.setLang));
+    });
+    setLanguage(localStorage.getItem('siteLanguage') || 'zh');
+  </script>
+</body>
+</html>
