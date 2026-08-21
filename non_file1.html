@@ -6,89 +6,144 @@
   <meta name="theme-color" content="#6057a6">
   <title>这里放第一篇文章标题 · 银河系狗熊大使</title>
   <style>
-    :root {
-      --ink:#23213a; --muted:#706e83; --paper:#f7f4ee; --card:rgba(255,255,255,.72);
-      --line:rgba(35,33,58,.13); --violet:#6659a7; --blue:#7da8c9; --yellow:#f0c96d;
-      --shadow:0 22px 60px rgba(49,43,84,.10);
-    }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body {
-      margin:0; color:var(--ink);
-      background:
-        radial-gradient(circle at 8% 8%, rgba(125,168,201,.22), transparent 25rem),
-        radial-gradient(circle at 88% 18%, rgba(240,201,109,.22), transparent 22rem),
-        var(--paper);
-      font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;
-      line-height:1.85;
-    }
-    a { color:inherit; }
-    .shell { width:min(900px,calc(100% - 36px)); margin:auto; }
-    .topbar {
-      display:flex; align-items:center; justify-content:space-between; gap:18px;
-      padding:24px 0;
-    }
-    .brand {
-      display:inline-flex; align-items:center; gap:10px; text-decoration:none;
-      font-family:ui-rounded,"PingFang SC",sans-serif; font-weight:750; letter-spacing:.03em;
-    }
-    .bear-dot {
-      display:grid; place-items:center; width:38px; height:38px; border:1px solid var(--line);
-      border-radius:15px 15px 18px 18px; background:#fff9; box-shadow:0 6px 18px rgba(49,43,84,.08);
-      transform:rotate(-4deg);
-    }
-    .right-tools { display:flex; align-items:center; gap:10px; }
-    .chip {
-      border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.55);
-      padding:8px 14px; text-decoration:none; font:600 13px/1.2 ui-rounded,"PingFang SC",sans-serif;
-    }
-    .lang-switch {
-      display:inline-flex; align-items:center; gap:6px; padding:4px 7px; border:1px solid var(--line);
-      border-radius:999px; background:rgba(255,255,255,.55);
-      font:700 12px/1 ui-rounded,"PingFang SC",sans-serif;
-    }
-    .lang-switch button {
-      border:0; padding:4px 6px; border-radius:999px; color:var(--muted); background:transparent;
-      cursor:pointer; font:inherit;
-    }
-    .lang-switch button.active { color:#fff; background:var(--ink); }
-    article {
-      margin:44px 0 90px; padding:clamp(30px,7vw,72px);
-      border:1px solid var(--line); border-radius:34px; background:var(--card);
-      box-shadow:var(--shadow); backdrop-filter:blur(14px);
-    }
-    .eyebrow {
-      display:inline-flex; gap:8px; align-items:center; color:var(--violet);
-      font:700 13px/1.2 ui-rounded,"PingFang SC",sans-serif; letter-spacing:.15em; text-transform:uppercase;
-    }
-    .eyebrow::before { content:""; width:28px; height:2px; background:currentColor; }
-    h1 {
-      margin:20px 0 14px; font-size:clamp(38px,7vw,66px); line-height:1.08; letter-spacing:-.04em;
-    }
-    .meta { color:var(--muted); font:600 13px/1.5 ui-rounded,"PingFang SC",sans-serif; margin-bottom:42px; }
-    .article-body { font-size:18px; }
-    .article-body p { margin:0 0 1.35em; }
-    .article-body h2 { margin:2.2em 0 .7em; font-size:28px; line-height:1.3; }
-    .placeholder-box {
-      margin:34px 0; padding:22px 24px; border:1px dashed rgba(102,89,167,.35);
-      border-radius:20px; background:rgba(102,89,167,.05); color:var(--muted);
-    }
-    .article-nav {
-      display:flex; justify-content:space-between; gap:12px; margin-top:52px; padding-top:24px;
-      border-top:1px solid var(--line);
-    }
-    footer {
-      display:flex; justify-content:space-between; gap:20px; padding:18px 0 48px;
-      border-top:1px solid var(--line); color:var(--muted);
-      font:600 12px/1.5 ui-rounded,"PingFang SC",sans-serif;
-    }
-    @media (max-width:650px) {
-      .topbar { align-items:flex-start; }
-      .right-tools { flex-wrap:wrap; justify-content:flex-end; }
-      article { margin-top:22px; }
-      .article-nav { flex-direction:column; }
-      footer { flex-direction:column; }
-    }
+    .essay {
+  margin: 44px 0 90px;
+  padding: clamp(30px, 7vw, 72px);
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.essay-header {
+  margin-bottom: 70px;
+}
+
+.essay-header h1 {
+  max-width: 720px;
+  margin: 20px 0 14px;
+  font-size: clamp(42px, 7vw, 72px);
+  line-height: 1.08;
+  letter-spacing: -.05em;
+}
+
+.essay-meta {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.essay-preface {
+  margin: 0 0 90px;
+  padding: 28px 32px;
+  border-left: 3px solid var(--blue);
+  background: rgba(125, 168, 201, .08);
+  border-radius: 0 20px 20px 0;
+}
+
+.essay-preface .section-number {
+  margin-bottom: 14px;
+  color: var(--blue);
+  font: 750 13px/1.2 ui-rounded, "PingFang SC", sans-serif;
+  letter-spacing: .12em;
+}
+
+.essay-section {
+  margin: 0 0 110px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 38px;
+}
+
+.section-index {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+  color: white;
+  background: var(--blue);
+  font: 800 22px/1 ui-rounded, "PingFang SC", sans-serif;
+  transform: rotate(-2deg);
+}
+
+.section-title h2 {
+  margin: 0;
+  color: var(--violet);
+  font-size: clamp(25px, 4vw, 36px);
+  letter-spacing: -.03em;
+}
+
+.essay-section p,
+.essay-preface p {
+  max-width: 690px;
+  margin: 0 auto 1.5em;
+  font-size: 18px;
+  line-height: 2;
+  text-align: justify;
+}
+
+.essay-image {
+  max-width: 650px;
+  margin: 0 auto 48px;
+}
+
+.essay-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 22px;
+  box-shadow: 0 16px 45px rgba(49, 43, 84, .12);
+}
+
+.essay-image-portrait {
+  max-width: 470px;
+}
+
+.essay-ending {
+  margin-bottom: 55px;
+}
+
+.essay-ending p:last-of-type {
+  font-weight: 600;
+}
+
+@media (max-width: 650px) {
+  .essay {
+    padding: 28px 22px;
+  }
+
+  .essay-header {
+    margin-bottom: 50px;
+  }
+
+  .essay-section {
+    margin-bottom: 75px;
+  }
+
+  .section-title {
+    align-items: flex-start;
+  }
+
+  .section-index {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    font-size: 18px;
+  }
+
+  .essay-section p,
+  .essay-preface p {
+    font-size: 16px;
+    line-height: 1.9;
+    text-align: left;
+  }
+}
   </style>
 </head>
 <body>
@@ -106,29 +161,303 @@
     </header>
 
     <main>
-      <article>
-        <div class="eyebrow">Non-paper writing · 01</div>
-        <h1 data-zh="这里放第一篇文章标题" data-en="Put your first title here">这里放第一篇文章标题</h1>
-        <div class="meta">
-          <span data-zh="2026 · 银河系狗熊大使" data-en="2026 · Galactic Bear Ambassador">2026 · 银河系狗熊大使</span>
-        </div>
+     <article class="essay">
 
-        <div class="article-body">
-          <p data-zh="这里是文章正文的位置。你可以直接把这一段替换成你的文章。" data-en="This is where the article begins. You can replace this paragraph with your own writing.">这里是文章正文的位置。你可以直接把这一段替换成你的文章。</p>
+  <header class="essay-header">
+    <div class="eyebrow">Non-paper writing · 01</div>
 
-          <div class="placeholder-box">
-            <span data-zh="建议：一段文字对应一个 &lt;p&gt;…&lt;/p&gt;。需要小标题时使用 &lt;h2&gt;…&lt;/h2&gt;。页面已经替你做好排版。" data-en="Tip: use one &lt;p&gt;…&lt;/p&gt; per paragraph, and &lt;h2&gt;…&lt;/h2&gt; for section headings. The page styling is already in place.">建议：一段文字对应一个 &lt;p&gt;…&lt;/p&gt;。需要小标题时使用 &lt;h2&gt;…&lt;/h2&gt;。页面已经替你做好排版。</span>
-          </div>
+    <h1>黄色的树林里分出两条小路</h1>
 
-          <h2 data-zh="一个小标题" data-en="A small heading">一个小标题</h2>
-          <p data-zh="这里继续写正文。之后如果你把真实文章内容发给我，我可以直接替你排进这些页面里。" data-en="Continue the article here. If you give me the actual text later, it can be placed directly into this layout.">这里继续写正文。之后如果你把真实文章内容发给我，我可以直接替你排进这些页面里。</p>
-        </div>
+    <p class="essay-meta">
+      一些关于高考、选择，以及三年前的自己的文字
+    </p>
+  </header>
 
-        <nav class="article-nav">
-          <span></span>
-          <a class="chip" href="article-02.html" data-zh="下一篇 →" data-en="Next →">下一篇 →</a>
-        </nav>
-      </article>
+
+  <!-- 写在前面 -->
+  <section class="essay-preface">
+
+    <div class="section-number">写在前面</div>
+
+    <p>
+      我是一个优柔寡断的人，普普通通，害怕定义、言胜于行且自认难成大事。
+      我从来没有写过关于自己的故事，也很清楚造不出直观上“有用”的文章。
+      在高考真正结束之前从来没有想过“北大会pick我”，
+      这篇文字的大意是我与高考、与北大的一点故事，
+      中心思想不清，叙述方法是想到哪是哪。
+      感谢身边的师友，他们是写作的意图。
+    </p>
+
+  </section>
+
+
+  <!-- 01 -->
+  <section class="essay-section">
+
+    <div class="section-title">
+      <span class="section-index">1</span>
+      <h2>黄色的树林里分出两条小路</h2>
+    </div>
+
+    <figure class="essay-image">
+      <img src="images/article-01-1.jpg" alt="">
+    </figure>
+
+    <p>
+      上高中以前，我一直认为自己是一名理科生，竞赛书、补习班、练习册……
+      一应俱全、成绩可观。但或许是高一第一次数检、第一场期中考试，
+      开启了我失败大于成功的主跑赛道。
+      睡不醒的早读、日日的38324、必须藏好的数学答题卡，
+      细节们累积在一起，顽固地显示出局部大于整体的特征，
+      无情冲垮一个典型三好学生的成功之路。
+      我还是不甘心，加倍努力、痴迷刻苦，
+      试图验证前十几年关于进步论的经验逻辑，
+      但在学期末也只得到了一张与“满意”相差很远的成绩单
+      和一个感动自我的失败神话。
+    </p>
+
+    <p>
+      疲劳和下坠形成完整的因果闭合，
+      到第二学期期中考试结束，文理分科的问题首次摆在我的眼前，
+      长久以来的隐隐崩溃和客观差距让我意识到
+      “自己已经没有更大的热情迎接下一段理科生命”，
+      我开始接受自己的不全面和很有限，
+      并对优势和不足做出重新排序——
+      我读书不算多但是都很喜欢，虽然文科成绩较（ke）弱（lian）
+      但是还有潜力，以后的职业理想也都与人文社科基础有关……
+      也许就是在那个时候，我开始打量学文的可能性，
+      问题是“这有一条更陌生、更危险的路，你要不要走”。
+    </p>
+
+    <p>
+      面对周遭诸多的不解和疑惑，
+      我如同一个内部不够圆融的外事官，
+      通过声张那点简单的喜欢和做梦的勇气进行了比较充分的自我安慰和心理建设。
+    </p>
+
+    <p>
+      我走上了我的小路。
+    </p>
+
+  </section>
+
+
+  <!-- 02 -->
+  <section class="essay-section">
+
+    <div class="section-title">
+      <span class="section-index">2</span>
+      <h2>黄色的小路上分出我和我们</h2>
+    </div>
+
+    <figure class="essay-image essay-image-wide">
+      <img src="images/article-01-2.jpg" alt="">
+    </figure>
+
+    <p>
+      在选择文科以后，我的目标变得清晰起来，
+      高二的整个学年可以一言以蔽之为“从头开始的中二时光”。
+      作为一个笨拙的初学者，
+      我虽全盘体验了把一轮复习当一轮预习的狼狈，
+      却也莫名找到了前所未有的快乐学习体验，
+      并不再需要话语的鼓动来约束懒散的个性。
+    </p>
+
+    <p>
+      可麻烦的选择没有停止。
+      即使现在所有人都在同一条路上行走，
+      我依然因为学习方法和能力的问题遭遇巨大的孤独。
+      我的学习方法在所有大小测中都表现出“水土不服”的症状。
+      我习惯于想清楚再动笔，
+      习惯以知识拓充为核心以刷题为辅，
+      但六门主课在这一阶段都开始注重“重点思维”的训练和熟练度的强化，
+      而我想要梳理每一个细节的来龙去脉并全盘铺开进行深入理解
+      再自行串联观点与观点、观点与例证以及学科与学科的关系——
+      每天的时间完全不能满足这样的要求，
+      我的学习进度和课堂的时间坐标产生了严重的偏离。
+    </p>
+
+    <p>
+      在“走一步看一步”的安慰中，
+      我一直选择优先做自己认为重要的工作、
+      学完想学的知识、压缩额外刷题的提分动作
+      并及时归纳课堂资料来应对节奏不一致的问题。
+      在文综的学习上，我会先看完相应的纪录片和书再做题，
+      比如在月考前读完一直喜欢的散文集寻找写作思路，
+      又比如直到高三下学期我还在做一套高二学校发的练习题
+      （因为质量很高）。
+      这在起步阶段导致每次大考前我总是才完成第一遍系统学习而做题经验不足
+      （地理选择能做对一半就足以感激涕零）。
+      一直不理想的成绩让我洒（wu）脱（nai）放弃了对排名的追逐，
+      尽管反馈机制红灯报警，
+      我还是凭着对知识本身的热情诚惶诚恐地捕捉着所有落在眼前的内容。
+    </p>
+
+    <p>
+      值得一提的是，疫情上网课期间给了我及时修正和改良这种学习方法的空间。
+      我会利用早读的时间精读外刊或收集喜欢的台词，
+      可以先追完纪录片和小说再开始写作业，
+      可以把数学选做集中攻克，
+      因为课下得早，可以在阳光正好时揉弦对音——
+      我一下拥有了更多独处的时间处理知识和做题的矛盾，
+      去做自己喜欢的事。
+      或许也正是在只有自己可以依赖的日子里，
+      我不再因为内心的边缘感而失落，
+      并对自己的方法和努力开始有所笃信。
+    </p>
+
+  </section>
+
+
+  <!-- 03 -->
+  <section class="essay-section">
+
+    <div class="section-title">
+      <span class="section-index">3</span>
+      <h2>我在小路尽头等你</h2>
+    </div>
+
+    <figure class="essay-image essay-image-portrait">
+      <img src="images/article-01-3.jpg" alt="">
+    </figure>
+
+    <p>
+      高三的第一次月考后我的成绩突然跳跃性上升，
+      这使我对方法的困惑得到了外部形式的短暂安慰，
+      我初步有了可以检索和查阅的知识地图
+      并可以根据学校的课程进度灵活调整不同学习版块的时间。
+      不知道什么时候起，
+      之前的积累在做题时开始带给我新的理解和启发，
+      许多新的材料和概念都是高二时就接触过的内容，
+      在这一阶段我的大量时间用于压榨课内丰富的学习资源
+      并学会更好地提问和反思。
+    </p>
+
+    <p>
+      这次的麻烦来自新鲜感的丧失和时间的线性叙事。
+      选择的成本越来越贵了，
+      机械的输出和情感的压抑安静地伴随着日日夜夜十几小时的读书写字，
+      我只好通过背诵硬化专注度，通过加快动作分担时间焦虑。
+      不过高三的时光从不是一尘不变的，
+      我会在早晨刷牙的时候背到《出师表》突然大恸，
+      会在晚自习前赶回家边听“新闻联播”边和爸爸说说话，
+      会在上晚自习的路上背史铁生背入巨大的肃穆，
+      也还是会在中午硬把《地理中国》看完哪怕只能睡十分钟。
+      尽管知道高考不远了也依然忍不住下晚自习后准时收看“佳片有约”，
+      依然好奇关于蜉蝣与大椿、鲤鱼和龙门的关系……
+    </p>
+
+    <p>
+      我是一个活不在当下的人，
+      在距离高考还有很久的时候就开始为“大观园的崩塌”而惶恐和紧张，
+      但奇怪的是越临近高考，我就越平静。
+      在用情绪的真实对抗奔跑的虚无感的过程里，
+      我慢慢意识到，能力永远捉襟见肘，而我只能拥有恰好拥有的一切。
+      虽然成绩和排名的波动依然大如三角函数，
+      但我再未制定新的跳跃目标、研究排名和收获的正向关系，
+      我学会守着满意的底线，对抗强壮的遗忘曲线并努力保持过往的“题感”。
+      我用剩下的时间尽力弄清楚做过的每一道题、
+      努力将每一篇考场作文或论述题写出全新的思考
+      并偶尔提醒自己“知识是什么”，
+      如此用勉强的裹腹感来应对一浪浪“刷题”的焦虑。
+    </p>
+
+    <p>
+      虽然，直到毕业我也没有写出范文式的高考作文，
+      没有练成“衡水体”的得分神器，
+      没有做成8000难题，
+      依然习惯在自信和自卑的两极中反复横跳，
+      但我还是带着这三年来每一场落日的冰凉、
+      每一颗星星的暧昧不清，
+      带着泥土的深情和窘迫的本领，
+      带着深深的哀伤和遗憾，走上了考场。
+    </p>
+
+  </section>
+
+
+  <!-- 04 -->
+  <section class="essay-section">
+
+    <div class="section-title">
+      <span class="section-index">4</span>
+      <h2>又是那片黄色的树林</h2>
+    </div>
+
+    <p>
+      我清楚地知道，关于世界的巨大困惑从不会因一场考试的结束、
+      一个目标的实现而失去对焦。
+      每一次面对选择我都重新成为一个毫无经验的玩家，
+      不解成为常态。
+      北大温柔地给予了我关于世界的重重心事和冒险。
+      我重新在课堂和讲座中接近宇宙、
+      学习面对光年之内人生顷刻的转易、
+      认识语言的神秘，
+      摸索着那被称为“北大精神”的文化印记，
+      也期待着和叫“凤爪”的小猫、静园的爬山虎在春天再次相遇……
+      一切关于生命的深刻感召，是北大给我的无声震撼。
+    </p>
+
+    <p>
+      选择元培，就像又来到了一片黄色的树林。
+      它是一个“微缩”的北大，
+      不同之处是每一个人在进来时都会有一顶自己的“分院帽”，
+      你可以自由选择自己的专业。
+      虽然作一顶分院帽有的时候会比较困难，
+      因为你要判断，
+      自己到底是真正的格兰芬多，
+      还是一个单纯被格兰芬多光环吸引的拉文克劳。
+      但元培极大程度包含了这种成分复杂的迷茫
+      并通过制度设计给每一个人学习选择的空间。
+    </p>
+
+    <p>
+      严肃的不确定性依然以“选择”的形式每天光顾，
+      浸泡在燕园的一思一课和一草一木让我逐渐找到一些确定性的执握，
+      在信息和感知的包裹中形塑模糊但真实的自我。
+    </p>
+
+  </section>
+
+
+  <!-- 05 -->
+  <section class="essay-section essay-ending">
+
+    <div class="section-title">
+      <span class="section-index">5</span>
+      <h2>结语</h2>
+    </div>
+
+    <p>
+      我在选文的时候一位朋友对我讲，
+      “学文科是需要情怀的，你具备这种资质，
+      最重要的是从来不随波逐流。”
+      虽然那以后的我看上去都像是当时的赝品，
+      经历着无数次拆解和重建，
+      但是我还是会怀着三年前学会的感动，
+      在之后每一场选择前听听树叶落下的声音。
+    </p>
+
+    <p>
+      （写到这里就没有了。）
+    </p>
+
+    <p>
+      最后就是真诚地希望面临高考的同学们
+      可以不因2日答卷放弃365天关于自我和世界的思考，
+      可以学到真正喜欢的知识并理解选择。
+      小路的尽头走着走着就到了。
+    </p>
+
+  </section>
+
+
+  <nav class="article-nav">
+    <a class="chip" href="index.html#work">← 返回作品柜</a>
+    <a class="chip" href="article-02.html">下一篇 →</a>
+  </nav>
+
+</article>
     </main>
 
     <footer>
