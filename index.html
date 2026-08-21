@@ -472,7 +472,7 @@
     if (sessionStorage.getItem('bearArchiveError') === '1') {
       sessionStorage.removeItem('bearArchiveError');
       secretDialog.showModal();
-      secretError.textContent = (localStorage.getItem('siteLanguage') || 'zh') === 'zh' ? '暗号不对，熊没有听懂。' : 'That was not the right key. The bear did not understand.';
+      secretError.textContent = (localStorage.getItem('siteLanguage') || 'zh') === 'zh' ? 'That was not the right key. ' : 'That was not the right key. ';
       setTimeout(() => secretPassword.focus(), 50);
     }
   </script>
