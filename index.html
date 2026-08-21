@@ -1,3 +1,132 @@
+
+我想把个人网页改成英语汉语可选择的版本
+
+可以，而且个人主页很适合这样做。最常见、也最干净的方式是：页面右上角放一个 中文 / EN 切换按钮，不跳转页面，直接切换当前页面文字。
+
+如果你的 GitHub Pages 现在是纯 HTML/CSS/JavaScript，我建议用“同一套页面结构 + 双语文本属性”的方式。比如：
+
+<button id="lang-toggle">中文 / EN</button>
+
+<h1
+  data-zh="你好，我是 Jhn"
+  data-en="Hi, I'm Jhn">
+  你好，我是 Jhn
+</h1>
+
+<p
+  data-zh="我是一名从事核成像研究的博士研究生。"
+  data-en="I'm a PhD student working on nuclear imaging.">
+  我是一名从事核成像研究的博士研究生。
+</p>
+然后加一小段 JavaScript：
+
+<script>
+  let currentLang = localStorage.getItem("lang") || "zh";
+
+  function setLanguage(lang) {
+    document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+
+    document.querySelectorAll("[data-zh][data-en]").forEach(el => {
+      el.textContent = el.dataset[lang];
+    });
+
+    currentLang = lang;
+    localStorage.setItem("lang", lang);
+  }
+
+  document.getElementById("lang-toggle").addEventListener("click", () => {
+    setLanguage(currentLang === "zh" ? "en" : "zh");
+  });
+
+  setLanguage(currentLang);
+</script>
+这样还有一个好处：访问者第一次选择 English 后，localStorage 会记住，下次打开还是英文。
+
+对于你的个人网站，我会更推荐把按钮做得稍微像网站的一部分，而不是普通按钮，例如：
+
+<div class="language-switch">
+  <button data-lang="zh">中</button>
+  <span>/</span>
+  <button data-lang="en">EN</button>
+</div>
+视觉上可以做成：
+
+中 / EN
+
+或者更隐蔽一点：
+
+中文　English
+
+如果你的网站本身有那种“隐藏入口 / 敲门 / 钥匙”式的设计语言，甚至可以把语言切换也设计成其中的一部分，而不是传统导航栏按钮。例如右上角只放：
+
+中 · EN
+
+这样会比一个大大的 “Language” 下拉框更适合个人主页。
+
+如果网页不止主页，还有点击按钮进入的第二页、第三页，我建议不要每一页分别维护两份 HTML。最好所有页面都共用一个 language.js，这样以后你改一句英文或中文，只需要维护对应页面文本，不需要维护两个完整网站。
+
+例如目录可以变成：
+
+index.html
+about.html
+secret.html
+
+css/
+  style.css
+
+js/
+  language.js
+language.js 统一负责中英文切换。
+
+如果文字以后越来越多，则可以进一步升级为：
+
+locales/
+  zh.json
+  en.json
+例如：
+
+{
+  "home.title": "你好，我是 Jhn",
+  "home.enter": "进入",
+  "secret.knock": "敲门"
+}
+英文：
+
+{
+  "home.title": "Hi, I'm Jhn",
+  "home.enter": "Enter",
+  "secret.knock": "Knock"
+}
+但以个人主页的规模，现在不必一开始就上 JSON 国际化系统，data-zh / data-en 已经足够简洁。
+
+如果你愿意把你现在 GitHub Pages 的代码贴给我，或者把 GitHub 仓库链接发我，我可以直接按照你现有网页结构告诉你具体改哪几个文件、代码插在哪里，并顺便把现有中文文案全部配成自然的英文版本。
+
+
+
+粘贴的文本 (1)(1).txt
+文档
+帮我加上：
+
+已经加好了。右上角现在会显示 中 / EN，点击后整页即时切换，并会用 localStorage 记住上次选择；导航、主页、About、作品、动态、页脚和隐藏入口都已经纳入双语切换。顺手也把隐藏入口里的 KET 改成了 KEY。原页面的主要结构与样式都保留了。
+
+
+下载修改后的双语版 index.html
+
+你可以直接把它改名为 index.html，替换 GitHub Pages 仓库里的原文件。 
+
+
+
+index_bilingual.html
+HTML
+
+
+资料库
+/
+index_bilingual.html
+
+
+
+
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -76,6 +205,31 @@
       transition: transform .2s ease, background .2s ease;
     }
     nav a:hover, .chip:hover { transform: translateY(-2px) rotate(-1deg); background: #fff; }
+
+    .lang-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: 6px;
+      padding: 4px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.55);
+      font: 700 12px/1 ui-rounded, "PingFang SC", sans-serif;
+    }
+    .lang-switch button {
+      border: 0;
+      padding: 4px 6px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: transparent;
+      cursor: pointer;
+      font: inherit;
+    }
+    .lang-switch button.active {
+      color: #fff;
+      background: var(--ink);
+    }
 
     .hero {
       position: relative;
@@ -302,26 +456,31 @@
 <body>
   <div class="shell">
     <header class="topbar">
-      <a class="brand" href="#top" aria-label="回到顶部"><span class="bear-dot">🐾</span> tiyu.me</a>
-      <nav aria-label="主导航">
-        <a href="#about">关于</a>
-        <a href="#work">作品</a>
-        <a href="#updates">动态</a>
+      <a class="brand" href="#top" aria-label="回到顶部" data-aria-zh="回到顶部" data-aria-en="Back to top"><span class="bear-dot">🐾</span> tiyu.me</a>
+      <nav aria-label="主导航" data-aria-zh="主导航" data-aria-en="Main navigation">
+        <a href="#about" data-zh="关于" data-en="About">关于</a>
+        <a href="#work" data-zh="作品" data-en="Work">作品</a>
+        <a href="#updates" data-zh="动态" data-en="Updates">动态</a>
+        <span class="lang-switch" aria-label="语言切换">
+          <button type="button" data-set-lang="zh">中</button>
+          <span>/</span>
+          <button type="button" data-set-lang="en">EN</button>
+        </span>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div>
-          <div class="eyebrow">Personal universe · 个人主页</div>
-          <h1 id="hero-title">银河系<br><span>狗熊大使</span></h1>
-          <p class="lead">此处需要有文化的字，我没文化所以没写</p>
+          <div class="eyebrow" data-zh="Personal universe · 个人主页" data-en="Personal universe · Home">Personal universe · 个人主页</div>
+          <h1 id="hero-title"><span data-zh="银河系" data-en="Galactic">银河系</span><br><span data-zh="狗熊大使" data-en="Bear Ambassador">狗熊大使</span></h1>
+          <p class="lead" data-zh="此处需要有文化的字，我没文化所以没写" data-en="Something cultured should probably go here. Unfortunately, the bear has not written it yet.">此处需要有文化的字，我没文化所以没写</p>
           <div class="hero-actions">
-            <a class="chip primary" href="#work">逛逛我的作品 ✦</a>
-            <a class="chip" href="mailto:tiyu0116@gmail.com">给我写信 💌</a>
+            <a class="chip primary" href="#work" data-zh="逛逛我的作品 ✦" data-en="Browse my work ✦">逛逛我的作品 ✦</a>
+            <a class="chip" href="mailto:tiyu0116@gmail.com" data-zh="给我写信 💌" data-en="Write to me 💌">给我写信 💌</a>
           </div>
         </div>
-        <div class="orbit" aria-label="漂浮在宇宙里的狗熊图案">
+        <div class="orbit" aria-label="漂浮在宇宙里的狗熊图案" data-aria-zh="漂浮在宇宙里的狗熊图案" data-aria-en="A bear floating in space">
           <span class="star one">✦</span><span class="star two">☾</span><span class="star three">·</span>
           <div class="mascot" aria-hidden="true">🐻</div>
         </div>
@@ -331,55 +490,94 @@
         <div class="intro-art" aria-hidden="true">🪐</div>
         <div class="intro-copy">
           <div class="eyebrow">01 · About me</div>
-          <h2>我的个人介绍</h2>
-          <p>请熊自己写</p>
-          <span class="chip">待续中… 🐾</span>
+          <h2 data-zh="我的个人介绍" data-en="About me">我的个人介绍</h2>
+          <p data-zh="请熊自己写" data-en="The bear should probably write this part herself.">请熊自己写</p>
+          <span class="chip" data-zh="待续中… 🐾" data-en="To be continued… 🐾">待续中… 🐾</span>
         </div>
       </section>
 
       <section id="work" class="work">
         <div class="section-head">
-          <div><div class="eyebrow">02 · Selected work</div><h2>我的作品柜</h2></div>
-          <p class="section-note">内容正在陆续上架，请随时回来看看。</p>
+          <div><div class="eyebrow">02 · Selected work</div><h2 data-zh="我的作品柜" data-en="My work cabinet">我的作品柜</h2></div>
+          <p class="section-note" data-zh="内容正在陆续上架，请随时回来看看。" data-en="More things are slowly finding their way here. Come back anytime.">内容正在陆续上架，请随时回来看看。</p>
         </div>
         <div class="grid">
-          <article class="card"><div class="card-icon">📎</div><h3>我写的论文</h3><p>熊写了什么</p><span class="placeholder">Coming soon · 01</span></article>
-          <article class="card"><div class="card-icon">✏️</div><h3>我写的不是论文的东西</h3><p>不好归类的熊务</p><span class="placeholder">Coming soon · 02</span></article>
-          <article class="card"><div class="card-icon">🎬</div><h3>我拍的视频</h3><p>熊片</p><span class="placeholder">Coming soon · 03</span></article>
+          <article class="card"><div class="card-icon">📎</div><h3 data-zh="我写的论文" data-en="Papers I wrote">我写的论文</h3><p data-zh="熊写了什么" data-en="Things the bear has written for science.">熊写了什么</p><span class="placeholder">Coming soon · 01</span></article>
+          <article class="card"><div class="card-icon">✏️</div><h3 data-zh="我写的不是论文的东西" data-en="Things I wrote that are not papers">我写的不是论文的东西</h3><p data-zh="不好归类的熊务" data-en="Bear business that refuses to fit into a category.">不好归类的熊务</p><span class="placeholder">Coming soon · 02</span></article>
+          <article class="card"><div class="card-icon">🎬</div><h3 data-zh="我拍的视频" data-en="Videos I made">我拍的视频</h3><p data-zh="熊片" data-en="Bear films.">熊片</p><span class="placeholder">Coming soon · 03</span></article>
         </div>
       </section>
 
       <section id="updates" class="updates">
-        <div class="updates-title"><div class="eyebrow" style="color:#f0c96d">Tiny signals</div><h2>最近的动态<br>与脑内天气</h2><p>一些很小的更新，和最近正在感兴趣的东西。</p></div>
+        <div class="updates-title"><div class="eyebrow" style="color:#f0c96d">Tiny signals</div><h2><span data-zh="最近的动态" data-en="Recent signals">最近的动态</span><br><span data-zh="与脑内天气" data-en="and inner weather">与脑内天气</span></h2><p data-zh="一些很小的更新，和最近正在感兴趣的东西。" data-en="Small updates, current curiosities, and whatever happens to be on my mind.">一些很小的更新，和最近正在感兴趣的东西。</p></div>
         <div class="update-list">
-          <article class="update-item"><time class="update-date">NOW</time><div><h3>主页正在慢慢长大</h3><p>熊还不知道写啥</p></div></article>
-          <article class="update-item"><time class="update-date">THINK</time><div><h3>最近感兴趣的东西</h3><p>这里将用来记录新的问题、书、电影、想法，以及突然出现的灵感。</p></div></article>
-          <article class="update-item"><time class="update-date">NEXT</time><div><h3>下一步</h3><p>熊接下来干啥</p></div></article>
+          <article class="update-item"><time class="update-date">NOW</time><div><h3 data-zh="主页正在慢慢长大" data-en="This homepage is slowly growing">主页正在慢慢长大</h3><p data-zh="熊还不知道写啥" data-en="The bear is still deciding what belongs here.">熊还不知道写啥</p></div></article>
+          <article class="update-item"><time class="update-date">THINK</time><div><h3 data-zh="最近感兴趣的东西" data-en="Things I am curious about lately">最近感兴趣的东西</h3><p data-zh="这里将用来记录新的问题、书、电影、想法，以及突然出现的灵感。" data-en="A place for new questions, books, films, ideas, and the occasional sudden spark.">这里将用来记录新的问题、书、电影、想法，以及突然出现的灵感。</p></div></article>
+          <article class="update-item"><time class="update-date">NEXT</time><div><h3 data-zh="下一步" data-en="Next">下一步</h3><p data-zh="熊接下来干啥" data-en="What the bear plans to do next.">熊接下来干啥</p></div></article>
         </div>
       </section>
     </main>
 
     <footer>
-      <div><strong>找到我</strong><div class="contact"><a class="chip" href="mailto:tiyu0116@gmail.com">💌 邮箱</a><a class="chip" href="https://www.xiaohongshu.com/user/profile/554731907" target="_blank" rel="noopener noreferrer">🍠 小红书 554731907</a><a class="chip" href="https://github.com/tiyu-me" target="_blank" rel="noopener noreferrer">🐙 GitHub</a></div></div>
-      <div class="tiny">2026银河系狗熊大使于地球制作</div>
+      <div><strong data-zh="找到我" data-en="Find me">找到我</strong><div class="contact"><a class="chip" href="mailto:tiyu0116@gmail.com" data-zh="💌 邮箱" data-en="💌 Email">💌 邮箱</a><a class="chip" href="https://www.xiaohongshu.com/user/profile/554731907" target="_blank" rel="noopener noreferrer" data-zh="🍠 小红书 554731907" data-en="🍠 Xiaohongshu 554731907">🍠 小红书 554731907</a><a class="chip" href="https://github.com/tiyu-me" target="_blank" rel="noopener noreferrer">🐙 GitHub</a></div></div>
+      <div class="tiny" data-zh="2026 银河系狗熊大使于地球制作" data-en="Made on Earth by the Galactic Bear Ambassador · 2026">2026 银河系狗熊大使于地球制作</div>
     </footer>
   </div>
-  <button class="secret-entry" id="secret-entry" type="button" aria-label="打开隐藏入口" title="">✦</button>
+  <button class="secret-entry" id="secret-entry" type="button" aria-label="打开隐藏入口" data-aria-zh="打开隐藏入口" data-aria-en="Open hidden entrance" title="">✦</button>
   <dialog class="secret-dialog" id="secret-dialog">
     <form class="secret-form" id="secret-form">
       <div class="eyebrow">Quiet corner</div>
-      <h2>这里有一扇小门</h2>
-      <p>报出暗号，熊才会开门。</p>
-      <label for="secret-password">暗号</label>
+      <h2>BACKDOOR</h2>
+      <p>Only those who hold the key—and the curiosity to use it—may enter.</p>
+      <label for="secret-password">KEY</label>
       <input id="secret-password" name="password" type="password" inputmode="numeric" autocomplete="off" required>
       <p class="secret-error" id="secret-error" role="status" aria-live="polite"></p>
       <div class="secret-actions">
-        <button class="chip" id="secret-cancel" type="button">先不进去</button>
-        <button class="chip primary" type="submit">敲门 🐾</button>
+        <button class="chip" id="secret-cancel" type="button" data-zh="返回" data-en="Turn back">返回</button>
+        <button class="chip primary" type="submit" data-zh="敲门 🐾" data-en="Knock 🐾">敲门 🐾</button>
       </div>
     </form>
   </dialog>
   <script>
+
+    const languageButtons = document.querySelectorAll('[data-set-lang]');
+
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+
+      document.querySelectorAll('[data-zh][data-en]').forEach((el) => {
+        el.textContent = el.dataset[lang];
+      });
+
+      document.querySelectorAll('[data-aria-zh][data-aria-en]').forEach((el) => {
+        el.setAttribute('aria-label', lang === 'zh' ? el.dataset.ariaZh : el.dataset.ariaEn);
+      });
+
+      document.querySelector('meta[name="description"]').setAttribute(
+        'content',
+        lang === 'zh'
+          ? '银河系狗熊大使的个人主页：文字、论文、视频，以及一些正在发生的念头。'
+          : 'The Galactic Bear Ambassador’s personal homepage: writing, papers, videos, and thoughts in progress.'
+      );
+
+      document.title = lang === 'zh' ? '银河系狗熊大使' : 'Galactic Bear Ambassador';
+
+      languageButtons.forEach((button) => {
+        const active = button.dataset.setLang === lang;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+
+      localStorage.setItem('siteLanguage', lang);
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.setLang));
+    });
+
+    const initialLanguage = localStorage.getItem('siteLanguage') || 'zh';
+    setLanguage(initialLanguage);
+
     const secretEntry = document.querySelector('#secret-entry');
     const secretDialog = document.querySelector('#secret-dialog');
     const secretForm = document.querySelector('#secret-form');
@@ -403,7 +601,7 @@
     if (sessionStorage.getItem('bearArchiveError') === '1') {
       sessionStorage.removeItem('bearArchiveError');
       secretDialog.showModal();
-      secretError.textContent = '暗号不对，熊没有听懂。';
+      secretError.textContent = (localStorage.getItem('siteLanguage') || 'zh') === 'zh' ? '暗号不对，熊没有听懂。' : 'That was not the right key. The bear did not understand.';
       setTimeout(() => secretPassword.focus(), 50);
     }
   </script>
