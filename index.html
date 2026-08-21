@@ -235,6 +235,35 @@
       text-transform: uppercase;
     }
 
+
+    .article-links {
+      display: grid;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .article-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.42);
+      text-decoration: none;
+      color: var(--ink);
+      font: 650 13px/1.35 ui-rounded, "PingFang SC", sans-serif;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .article-links a:hover {
+      transform: translateX(4px);
+      background: rgba(255,255,255,.8);
+    }
+    .article-links .arrow {
+      color: var(--violet);
+      flex: 0 0 auto;
+    }
+
     .updates { display: grid; grid-template-columns: .75fr 1.25fr; margin-bottom: 96px; overflow: hidden; }
     .updates-title { padding: 44px; background: var(--ink); color: #fff; }
     .updates-title h2 { margin: 10px 0 14px; }
@@ -374,7 +403,16 @@
         </div>
         <div class="grid">
           <article class="card"><div class="card-icon">📎</div><h3 data-zh="我写的论文" data-en="Papers I wrote">我写的论文</h3><p data-zh="熊写了什么" data-en="Things the bear has written for science.">熊写了什么</p><span class="placeholder">Coming soon · 01</span></article>
-          <article class="card"><div class="card-icon">✏️</div><h3 data-zh="我写的不是论文的东西" data-en="Things I wrote that are not papers">我写的不是论文的东西</h3><p data-zh="不好归类的熊务" data-en="Bear business that refuses to fit into a category.">不好归类的熊务</p><span class="placeholder">Coming soon · 02</span></article>
+          <article class="card">
+  <div class="card-icon">✏️</div>
+  <h3 data-zh="我写的不是论文的东西" data-en="Things I wrote that are not papers">我写的不是论文的东西</h3>
+  <p data-zh="一些不好归类，但我想留下来的东西。" data-en="Things that resist categories, but that I wanted to keep.">一些不好归类，但我想留下来的东西。</p>
+  <div class="article-links">
+    <a href="article-01.html"><span data-zh="文章 01 · 这里放第一篇文章标题" data-en="Article 01 · Put your first title here">文章 01 · 这里放第一篇文章标题</span><span class="arrow">↗</span></a>
+    <a href="article-02.html"><span data-zh="文章 02 · 这里放第二篇文章标题" data-en="Article 02 · Put your second title here">文章 02 · 这里放第二篇文章标题</span><span class="arrow">↗</span></a>
+    <a href="article-03.html"><span data-zh="文章 03 · 这里放第三篇文章标题" data-en="Article 03 · Put your third title here">文章 03 · 这里放第三篇文章标题</span><span class="arrow">↗</span></a>
+  </div>
+</article>
           <article class="card"><div class="card-icon">🎬</div><h3 data-zh="我拍的视频" data-en="Videos I made">我拍的视频</h3><p data-zh="熊片" data-en="Bear films.">熊片</p><span class="placeholder">Coming soon · 03</span></article>
         </div>
       </section>
@@ -472,7 +510,7 @@
     if (sessionStorage.getItem('bearArchiveError') === '1') {
       sessionStorage.removeItem('bearArchiveError');
       secretDialog.showModal();
-      secretError.textContent = (localStorage.getItem('siteLanguage') || 'zh') === 'zh' ? 'That was not the right key. ' : 'That was not the right key. ';
+      secretError.textContent = (localStorage.getItem('siteLanguage') || 'zh') === 'zh' ? '暗号不对，熊没有听懂。' : 'That was not the right key. The bear did not understand.';
       setTimeout(() => secretPassword.focus(), 50);
     }
   </script>
