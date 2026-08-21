@@ -5,146 +5,775 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#6057a6">
   <title>这里放第一篇文章标题 · 银河系狗熊大使</title>
-  <style>
-    .essay {
-  margin: 44px 0 90px;
-  padding: clamp(30px, 7vw, 72px);
-  border: 1px solid var(--line);
-  border-radius: 34px;
-  background: var(--card);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(14px);
-}
-
-.essay-header {
-  margin-bottom: 70px;
-}
-
-.essay-header h1 {
-  max-width: 720px;
-  margin: 20px 0 14px;
-  font-size: clamp(42px, 7vw, 72px);
-  line-height: 1.08;
-  letter-spacing: -.05em;
-}
-
-.essay-meta {
-  color: var(--muted);
-  font-size: 14px;
-}
-
-.essay-preface {
-  margin: 0 0 90px;
-  padding: 28px 32px;
-  border-left: 3px solid var(--blue);
-  background: rgba(125, 168, 201, .08);
-  border-radius: 0 20px 20px 0;
-}
-
-.essay-preface .section-number {
-  margin-bottom: 14px;
-  color: var(--blue);
-  font: 750 13px/1.2 ui-rounded, "PingFang SC", sans-serif;
-  letter-spacing: .12em;
-}
-
-.essay-section {
-  margin: 0 0 110px;
-}
-
-.section-title {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin-bottom: 38px;
-}
-
-.section-index {
-  display: grid;
-  place-items: center;
-  flex: 0 0 auto;
-  width: 54px;
-  height: 54px;
-  border-radius: 17px;
-  color: white;
-  background: var(--blue);
-  font: 800 22px/1 ui-rounded, "PingFang SC", sans-serif;
-  transform: rotate(-2deg);
-}
-
-.section-title h2 {
-  margin: 0;
-  color: var(--violet);
-  font-size: clamp(25px, 4vw, 36px);
-  letter-spacing: -.03em;
-}
-
-.essay-section p,
-.essay-preface p {
-  max-width: 690px;
-  margin: 0 auto 1.5em;
-  font-size: 18px;
-  line-height: 2;
-  text-align: justify;
-}
-
-.essay-image {
-  max-width: 650px;
-  margin: 0 auto 48px;
-}
-
-.essay-image img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 22px;
-  box-shadow: 0 16px 45px rgba(49, 43, 84, .12);
-}
-
-.essay-image-portrait {
-  max-width: 470px;
-}
-
-.essay-ending {
-  margin-bottom: 55px;
-}
-
-.essay-ending p:last-of-type {
-  font-weight: 600;
-}
-
-@media (max-width: 650px) {
-  .essay {
-    padding: 28px 22px;
+<style>
+  :root {
+    --ink: #23213a;
+    --muted: #706e83;
+    --paper: #f7f4ee;
+    --card: rgba(255, 255, 255, .72);
+    --line: rgba(35, 33, 58, .13);
+    --violet: #6659a7;
+    --blue: #7da8c9;
+    --yellow: #f0c96d;
+    --shadow: 0 22px 60px rgba(49, 43, 84, .10);
   }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+
+    background:
+      radial-gradient(
+        circle at 8% 8%,
+        rgba(125, 168, 201, .22),
+        transparent 25rem
+      ),
+      radial-gradient(
+        circle at 88% 18%,
+        rgba(240, 201, 109, .20),
+        transparent 22rem
+      ),
+      var(--paper);
+
+    font-family:
+      "Noto Serif SC",
+      "Songti SC",
+      "STSong",
+      Georgia,
+      serif;
+
+    line-height: 1.8;
+  }
+
+
+  /* =========================
+     整篇文章
+     不再使用巨大白色外框
+     ========================= */
+
+  .essay {
+    position: relative;
+
+    width: min(
+      960px,
+      calc(100% - 36px)
+    );
+
+    margin: 0 auto;
+    padding: 72px 0 120px;
+  }
+
+
+  /* =========================
+     文章标题
+     做得更像首页 Hero
+     ========================= */
 
   .essay-header {
-    margin-bottom: 50px;
+    position: relative;
+
+    max-width: 820px;
+
+    margin:
+      30px auto
+      110px;
+
+    padding:
+      36px 20px
+      20px;
   }
+
+
+  .essay-header::before {
+    content: "✦";
+
+    position: absolute;
+    top: -20px;
+    right: 6%;
+
+    color: var(--yellow);
+
+    font-size: 38px;
+
+    transform: rotate(12deg);
+  }
+
+
+  .essay-header::after {
+    content: "·";
+
+    position: absolute;
+    left: -10px;
+    bottom: -20px;
+
+    color: var(--blue);
+
+    font-size: 64px;
+  }
+
+
+  .essay-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--violet);
+
+    font:
+      700 13px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+
+  .essay-header .eyebrow::before {
+    content: "";
+
+    width: 28px;
+    height: 2px;
+
+    background: currentColor;
+  }
+
+
+  .essay-header h1 {
+    max-width: 780px;
+
+    margin: 22px 0 24px;
+
+    font-size:
+      clamp(
+        46px,
+        7vw,
+        78px
+      );
+
+    font-weight: 800;
+    line-height: 1.05;
+
+    letter-spacing: -.055em;
+  }
+
+
+  .essay-meta {
+    max-width: 560px;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+  }
+
+
+  /* =========================
+     写在前面
+     像首页 About 那种轻卡片
+     ========================= */
+
+  .essay-preface {
+    position: relative;
+
+    max-width: 760px;
+
+    margin:
+      0 auto
+      110px;
+
+    padding:
+      38px
+      clamp(28px, 6vw, 58px);
+
+    border: 1px solid var(--line);
+    border-radius: 30px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, .76),
+        rgba(229, 223, 240, .58)
+      );
+
+    box-shadow: var(--shadow);
+
+    transform: rotate(-.35deg);
+  }
+
+
+  .essay-preface::after {
+    content: "☾";
+
+    position: absolute;
+    right: 26px;
+    bottom: 15px;
+
+    color: rgba(102, 89, 167, .20);
+
+    font-size: 46px;
+  }
+
+
+  .essay-preface .section-number {
+    margin-bottom: 18px;
+
+    color: var(--violet);
+
+    font:
+      750 12px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    letter-spacing: .16em;
+  }
+
+
+  /* =========================
+     每个章节
+     ========================= */
 
   .essay-section {
-    margin-bottom: 75px;
+    position: relative;
+
+    margin:
+      0 auto
+      115px;
+
+    padding:
+      clamp(34px, 6vw, 64px);
+
+    border: 1px solid var(--line);
+    border-radius: 32px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .62
+      );
+
+    box-shadow:
+      0 16px 45px
+      rgba(
+        49,
+        43,
+        84,
+        .07
+      );
+
+    backdrop-filter:
+      blur(12px);
   }
+
+
+  /*
+    三种颜色轮换，
+    对应首页三张作品卡
+  */
+
+  .essay-section:nth-of-type(3n + 1) {
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .68
+      );
+  }
+
+
+  .essay-section:nth-of-type(3n + 2) {
+    background:
+      rgba(
+        227,
+        221,
+        241,
+        .58
+      );
+  }
+
+
+  .essay-section:nth-of-type(3n) {
+    background:
+      rgba(
+        214,
+        229,
+        239,
+        .60
+      );
+  }
+
+
+  /*
+    很轻微的不规则感，
+    和首页 card hover / mascot 呼应
+  */
+
+  .essay-section:nth-of-type(even) {
+    transform: rotate(.18deg);
+  }
+
+
+  .essay-section:nth-of-type(odd) {
+    transform: rotate(-.12deg);
+  }
+
+
+  /* =========================
+     章节标题
+     ========================= */
 
   .section-title {
-    align-items: flex-start;
+    display: flex;
+
+    align-items:
+      center;
+
+    gap: 18px;
+
+    margin-bottom: 42px;
   }
 
+
   .section-index {
+    display: grid;
+
+    place-items: center;
+
+    flex: 0 0 auto;
+
     width: 44px;
     height: 44px;
-    border-radius: 14px;
-    font-size: 18px;
+
+    border:
+      1px solid
+      rgba(
+        102,
+        89,
+        167,
+        .18
+      );
+
+    border-radius:
+      15px 15px 18px 18px;
+
+    color: var(--violet);
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .72
+      );
+
+    box-shadow:
+      0 6px 18px
+      rgba(
+        49,
+        43,
+        84,
+        .07
+      );
+
+    font:
+      800 15px/1
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    transform:
+      rotate(-4deg);
   }
+
+
+  .section-title h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size:
+      clamp(
+        27px,
+        4vw,
+        40px
+      );
+
+    line-height: 1.2;
+
+    letter-spacing:
+      -.04em;
+  }
+
+
+  /* =========================
+     正文
+     ========================= */
 
   .essay-section p,
   .essay-preface p {
-    font-size: 16px;
-    line-height: 1.9;
-    text-align: left;
+    max-width: 680px;
+
+    margin:
+      0 auto
+      1.65em;
+
+    color:
+      #454258;
+
+    font-size:
+      17px;
+
+    line-height:
+      2.05;
+
+    letter-spacing:
+      .015em;
+
+    /*
+      不使用 justify。
+      中文 justify 很容易产生
+      那种公众号 / Word 文档感。
+    */
+    text-align:
+      left;
   }
-}
-  </style>
+
+
+  .essay-section p:last-child,
+  .essay-preface p:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* =========================
+     图片
+     ========================= */
+
+  .essay-image {
+    position: relative;
+
+    max-width: 640px;
+
+    margin:
+      5px auto
+      48px;
+  }
+
+
+  .essay-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border:
+      1px solid
+      rgba(
+        35,
+        33,
+        58,
+        .10
+      );
+
+    border-radius:
+      20px;
+
+    box-shadow:
+      0 13px 35px
+      rgba(
+        49,
+        43,
+        84,
+        .10
+      );
+  }
+
+
+  /*
+    一个很轻的小装饰，
+    不让图片看起来像普通博客配图
+  */
+
+  .essay-image::before {
+    content: "✦";
+
+    position: absolute;
+
+    top: -18px;
+    left: -18px;
+
+    z-index: 2;
+
+    color: var(--yellow);
+
+    font-size: 25px;
+
+    transform:
+      rotate(-10deg);
+  }
+
+
+  .essay-image-wide {
+    max-width: 720px;
+  }
+
+
+  .essay-image-portrait {
+    max-width: 450px;
+  }
+
+
+  /* =========================
+     结语
+     单独给一点黄色
+     ========================= */
+
+  .essay-ending {
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, .73),
+        rgba(240, 201, 109, .18)
+      );
+  }
+
+
+  .essay-ending .section-index {
+    color:
+      #886b25;
+
+    background:
+      rgba(
+        240,
+        201,
+        109,
+        .30
+      );
+  }
+
+
+  .essay-ending p:last-of-type {
+    color: var(--ink);
+
+    font-weight: 600;
+  }
+
+
+  /* =========================
+     上一篇 / 下一篇
+     ========================= */
+
+  .article-nav {
+    display: flex;
+
+    justify-content:
+      space-between;
+
+    gap: 14px;
+
+    max-width: 760px;
+
+    margin:
+      30px auto
+      0;
+
+    padding-top: 20px;
+  }
+
+
+  .article-nav .chip {
+    border:
+      1px solid
+      var(--line);
+
+    border-radius:
+      999px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .55
+      );
+
+    padding:
+      9px 16px;
+
+    color:
+      var(--ink);
+
+    text-decoration:
+      none;
+
+    font:
+      600 13px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    transition:
+      transform .2s ease,
+      background .2s ease;
+  }
+
+
+  .article-nav .chip:hover {
+    transform:
+      translateY(-2px)
+      rotate(-1deg);
+
+    background: #fff;
+  }
+
+
+  /* =========================
+     手机
+     ========================= */
+
+  @media (max-width: 650px) {
+
+    .essay {
+      width:
+        min(
+          100% - 24px,
+          960px
+        );
+
+      padding:
+        35px 0
+        75px;
+    }
+
+
+    .essay-header {
+      margin-bottom:
+        65px;
+
+      padding:
+        28px 12px
+        10px;
+    }
+
+
+    .essay-header h1 {
+      font-size:
+        clamp(
+          40px,
+          13vw,
+          60px
+        );
+    }
+
+
+    .essay-preface {
+      margin-bottom:
+        70px;
+
+      padding:
+        28px 24px;
+
+      border-radius:
+        24px;
+    }
+
+
+    .essay-section {
+      margin-bottom:
+        60px;
+
+      padding:
+        30px 22px;
+
+      border-radius:
+        25px;
+    }
+
+
+    .section-title {
+      gap: 13px;
+
+      margin-bottom:
+        28px;
+    }
+
+
+    .section-index {
+      width: 38px;
+      height: 38px;
+
+      border-radius:
+        13px;
+
+      font-size:
+        13px;
+    }
+
+
+    .section-title h2 {
+      font-size:
+        25px;
+    }
+
+
+    .essay-section p,
+    .essay-preface p {
+      font-size:
+        16px;
+
+      line-height:
+        1.95;
+    }
+
+
+    .essay-image {
+      margin-bottom:
+        34px;
+    }
+
+
+    .essay-image img {
+      border-radius:
+        16px;
+    }
+
+
+    .article-nav {
+      flex-direction:
+        column;
+    }
+
+  }
+
+
+  @media (
+    prefers-reduced-motion:
+    reduce
+  ) {
+
+    *,
+    *::before,
+    *::after {
+      transition:
+        none !important;
+    }
+
+  }
+</style>
 </head>
 <body>
   <div class="shell">
@@ -166,7 +795,7 @@
   <header class="essay-header">
     <div class="eyebrow">Non-paper writing · 01</div>
 
-    <h1>黄色的树林里分出两条小路</h1>
+    <h1>选择</h1>
 
     <p class="essay-meta">
       一些关于高考、选择，以及三年前的自己的文字
