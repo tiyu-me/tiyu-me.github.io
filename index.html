@@ -1166,6 +1166,634 @@
       }
     }
   </style>
+
+  <style id="cold-editorial-overrides">
+    /* =========================================================
+       Cold editorial redesign
+       Keeps the original content / language switch / secret entry,
+       but replaces the soft pastel + rounded-card visual system.
+       ========================================================= */
+
+    :root {
+      --ink: #171717;
+      --ink-soft: #2a2a2a;
+      --muted: #77736f;
+      --paper: #f5f5f2;
+      --paper-deep: #eeeeea;
+      --card: transparent;
+      --line: rgba(20,20,20,.18);
+      --violet: #4f4f4f;
+      --violet-soft: #8f8f8f;
+      --blue: #8c8c8c;
+      --blue-deep: #555;
+      --mist: #deded9;
+      --shadow: none;
+    }
+
+    html { background: var(--paper); }
+
+    body {
+      color: var(--ink);
+      background: var(--paper);
+      font-family:
+        "Times New Roman",
+        "Songti SC",
+        "STSong",
+        "Noto Serif SC",
+        serif;
+      line-height: 1.68;
+      letter-spacing: .002em;
+    }
+
+    /* almost invisible grain — cooler and less decorative */
+    body::before {
+      opacity: .025;
+      mix-blend-mode: multiply;
+    }
+
+    .shell {
+      width: min(1320px, calc(100% - 96px));
+    }
+
+    /* ---------- header ---------- */
+    .topbar {
+      min-height: 92px;
+      padding: 30px 0 18px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      gap: 12px;
+      color: var(--ink);
+      font-family:
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: .02em;
+    }
+
+    .bear-dot {
+      width: auto;
+      height: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--ink);
+      font-size: 18px;
+      transform: none;
+    }
+
+    nav {
+      align-items: flex-start;
+      gap: 5px 22px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    nav a,
+    .chip {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 2px 0 5px;
+      color: var(--ink);
+      font:
+        400 15px/1.25
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition:
+        opacity .18s ease,
+        border-color .18s ease;
+    }
+
+    nav a:hover,
+    .chip:hover {
+      transform: none;
+      background: transparent;
+      border-color: currentColor;
+      opacity: .58;
+    }
+
+    .lang-switch {
+      gap: 4px;
+      margin-left: 4px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      font:
+        400 12px/1.2
+        "Times New Roman",
+        "Songti SC",
+        serif;
+    }
+
+    .lang-switch button {
+      padding: 2px 4px;
+      border-radius: 0;
+      color: #8b8b88;
+      font-weight: 400;
+    }
+
+    .lang-switch button.active {
+      color: var(--ink);
+      background: transparent;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* ---------- hero ---------- */
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .72fr);
+      min-height: 720px;
+      gap: clamp(60px, 8vw, 132px);
+      padding: 86px 0 116px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      color: #696969;
+      font:
+        400 12px/1.2
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 34px;
+      height: 1px;
+      background: #7b7b7b;
+    }
+
+    h1 {
+      max-width: 800px;
+      margin: 32px 0 28px;
+      font-size: clamp(70px, 9vw, 132px);
+      font-weight: 400;
+      line-height: .9;
+      letter-spacing: -.065em;
+    }
+
+    .hero-name-secondary {
+      color: #777;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: -.05em;
+    }
+
+    .lead {
+      max-width: 520px;
+      color: #666;
+      font-size: clamp(16px, 1.6vw, 20px);
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      gap: 24px;
+      margin-top: 42px;
+    }
+
+    .hero-actions .primary {
+      color: var(--ink);
+      background: transparent;
+      border-color: var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    /* portrait: strictly black & white, no orbit / glow / round mask */
+    .orbit {
+      width: min(430px, 35vw);
+      aspect-ratio: auto;
+      display: block;
+      justify-self: end;
+    }
+
+    .orbit::before,
+    .orbit::after,
+    .star {
+      display: none;
+    }
+
+    .mascot {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      border-radius: 0;
+      background: #d9d9d6;
+      box-shadow: none;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .mascot img {
+      object-position: 61% 45%;
+      filter: grayscale(1) contrast(1.12) brightness(.94);
+      transition: filter .35s ease, opacity .35s ease;
+    }
+
+    .mascot:hover img {
+      filter: grayscale(1) contrast(1.18) brightness(.9);
+      opacity: .94;
+    }
+
+    /* ---------- headings / shared ---------- */
+    .section-head {
+      margin-bottom: 38px;
+      align-items: end;
+    }
+
+    h2 {
+      font-weight: 400;
+      font-size: clamp(36px, 4.2vw, 60px);
+      letter-spacing: -.045em;
+    }
+
+    .section-note {
+      color: #777;
+      font-size: 13px;
+      max-width: 320px;
+      text-align: right;
+    }
+
+    /* ---------- about ---------- */
+    .intro,
+    .updates {
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .intro {
+      grid-template-columns: .62fr 1.38fr;
+      margin: 0;
+      padding: 112px 0 124px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .intro-art {
+      min-height: 390px;
+      background: #171717;
+    }
+
+    .intro-art::before {
+      width: 94px;
+      height: 94px;
+      border: 1px solid rgba(255,255,255,.5);
+      box-shadow:
+        0 0 0 26px rgba(255,255,255,.055),
+        0 0 0 62px rgba(255,255,255,.025);
+    }
+
+    .intro-art::after {
+      color: rgba(255,255,255,.6);
+      font-size: 30px;
+    }
+
+    .intro-copy {
+      padding: 18px 0 18px clamp(48px, 8vw, 118px);
+      align-self: center;
+    }
+
+    .intro-copy .eyebrow {
+      margin-bottom: 22px;
+    }
+
+    .intro-copy p {
+      max-width: 680px;
+      color: #676767;
+      font-size: 18px;
+      line-height: 2;
+    }
+
+    /* ---------- work becomes editorial rows ---------- */
+    .work {
+      padding: 116px 0 126px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .card {
+      min-height: 0;
+      padding: 28px 0 32px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      border-radius: 0;
+      background: transparent !important;
+      box-shadow: none;
+      backdrop-filter: none;
+      display: grid;
+      grid-template-columns: 64px minmax(220px, .72fr) minmax(280px, 1.28fr) auto;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .card:hover {
+      transform: none;
+      box-shadow: none;
+      background: transparent;
+    }
+
+    .card-icon {
+      font-size: 19px;
+      opacity: .55;
+      filter: grayscale(1);
+      padding-top: 4px;
+    }
+
+    .card h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.25;
+    }
+
+    .card > p {
+      margin: 2px 0 0;
+      color: #707070;
+      max-width: 540px;
+      font-size: 14px;
+    }
+
+    .placeholder {
+      position: static;
+      justify-self: end;
+      padding-top: 4px;
+      color: #858585;
+      font:
+        400 10px/1.2
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing: .14em;
+    }
+
+    .article-links {
+      grid-column: 3 / 5;
+      gap: 0;
+      margin-top: 12px;
+      border-top: 1px solid rgba(20,20,20,.11);
+    }
+
+    .article-links a {
+      padding: 12px 0;
+      border: 0;
+      border-bottom: 1px solid rgba(20,20,20,.11);
+      border-radius: 0;
+      background: transparent;
+      font:
+        400 14px/1.45
+        "Times New Roman",
+        "Songti SC",
+        serif;
+    }
+
+    .article-links a:hover {
+      transform: none;
+      background: transparent;
+      opacity: .55;
+      border-color: rgba(20,20,20,.2);
+    }
+
+    .article-links .arrow {
+      color: #555;
+    }
+
+    /* ---------- updates ---------- */
+    .updates {
+      grid-template-columns: .7fr 1.3fr;
+      margin: 0;
+      padding: 112px 0 124px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .updates-title {
+      padding: 0 clamp(44px, 6vw, 94px) 0 0;
+      color: var(--ink);
+      background: transparent;
+      border-right: 1px solid var(--line);
+    }
+
+    .updates-title .eyebrow {
+      color: #777 !important;
+    }
+
+    .updates-title p {
+      color: #717171;
+      max-width: 360px;
+      line-height: 1.85;
+    }
+
+    .update-list {
+      padding: 0 0 0 clamp(44px, 6vw, 94px);
+    }
+
+    .update-item {
+      grid-template-columns: 74px 1fr;
+      gap: 22px;
+      padding: 25px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .update-date {
+      color: #8b8b8b;
+      font:
+        400 11px/1.4
+        "Times New Roman",
+        serif;
+      letter-spacing: .11em;
+    }
+
+    .update-item h3 {
+      font-weight: 400;
+      font-size: 20px;
+    }
+
+    .update-item p {
+      color: #767676;
+    }
+
+    /* ---------- footer ---------- */
+    footer {
+      padding: 36px 0 56px;
+      border-top: 0;
+      font-family:
+        "Times New Roman",
+        "Songti SC",
+        serif;
+    }
+
+    .contact {
+      gap: 22px;
+      margin-top: 12px;
+    }
+
+    .tiny {
+      color: #888;
+      font-size: 11px;
+    }
+
+    /* ---------- secret ---------- */
+    .secret-entry {
+      color: #111;
+      opacity: .14;
+    }
+
+    .secret-dialog {
+      border: 1px solid rgba(20,20,20,.25);
+      border-radius: 0;
+      color: var(--ink);
+      background: #f3f3f0;
+      box-shadow: 0 28px 90px rgba(0,0,0,.22);
+    }
+
+    .secret-dialog::backdrop {
+      background: rgba(0,0,0,.48);
+      backdrop-filter: blur(3px);
+    }
+
+    .secret-form input {
+      border: 0;
+      border-bottom: 1px solid #555;
+      border-radius: 0;
+      background: transparent;
+      padding-left: 0;
+      padding-right: 0;
+      font-family: inherit;
+    }
+
+    .secret-form input:focus {
+      border-color: #111;
+      box-shadow: none;
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 900px) {
+      .shell {
+        width: min(100% - 44px, 1320px);
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        gap: 58px;
+        padding: 70px 0 86px;
+      }
+
+      .orbit {
+        width: min(560px, 100%);
+        justify-self: start;
+      }
+
+      .mascot {
+        aspect-ratio: 16 / 11;
+      }
+
+      .card {
+        grid-template-columns: 42px 1fr;
+      }
+
+      .card > p,
+      .placeholder,
+      .article-links {
+        grid-column: 2;
+      }
+
+      .placeholder {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 800px) {
+      nav a:not(:last-of-type) {
+        display: none;
+      }
+
+      .intro,
+      .updates {
+        grid-template-columns: 1fr;
+      }
+
+      .intro {
+        padding: 78px 0 86px;
+      }
+
+      .intro-copy {
+        padding: 44px 0 0;
+      }
+
+      .updates {
+        padding: 78px 0 86px;
+      }
+
+      .updates-title {
+        padding: 0 0 44px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .update-list {
+        padding: 18px 0 0;
+      }
+
+      .section-note {
+        display: none;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .shell {
+        width: min(100% - 28px, 1320px);
+      }
+
+      .topbar {
+        min-height: 76px;
+        padding-top: 22px;
+      }
+
+      h1 {
+        font-size: clamp(58px, 20vw, 92px);
+      }
+
+      .hero {
+        padding-top: 56px;
+      }
+
+      .mascot {
+        aspect-ratio: 4 / 5;
+      }
+
+      .card {
+        grid-template-columns: 28px 1fr;
+        gap: 14px;
+      }
+
+      .card h3 {
+        font-size: 21px;
+      }
+
+      .update-item {
+        grid-template-columns: 58px 1fr;
+      }
+    }
+  </style>
+
 </head>
 
 
