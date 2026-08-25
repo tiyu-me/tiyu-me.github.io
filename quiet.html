@@ -4,63 +4,638 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#24213f">
+  <meta name="theme-color" content="#1f1f1d">
   <title>关于我</title>
+
   <style>
-    :root{--ink:#23213a;--paper:#f5f1e8;--violet:#6b5fac;--line:rgba(35,33,58,.14);--muted:#747184}
-    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:radial-gradient(circle at 86% 5%,rgba(126,164,197,.22),transparent 25rem),radial-gradient(circle at 3% 45%,rgba(231,202,133,.18),transparent 23rem),var(--paper);font-family:"Noto Serif SC","Songti SC","STSong",Georgia,serif;line-height:1.9}
-    .shell{width:min(950px,calc(100% - 36px));margin:auto}.top{display:flex;justify-content:space-between;align-items:center;padding:26px 0}.back{padding:8px 14px;border:1px solid var(--line);border-radius:999px;color:inherit;background:#fff8;text-decoration:none;font:600 13px/1.2 ui-rounded,"PingFang SC",sans-serif}.mark{font:700 14px/1 ui-rounded,"PingFang SC",sans-serif;letter-spacing:.08em}.hero{padding:74px 0 86px;border-bottom:1px solid var(--line)}.eyebrow{color:var(--violet);font:700 12px/1.2 ui-rounded,"PingFang SC",sans-serif;letter-spacing:.16em;text-transform:uppercase}.hero h1{max-width:700px;margin:17px 0 18px;font-size:clamp(50px,8vw,88px);line-height:1.02;letter-spacing:-.06em}.hero p{max-width:580px;margin:0;color:var(--muted);font-size:18px}
-    .essays{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:48px 0 90px}.essay{min-height:330px;padding:34px;border:1px solid var(--line);border-radius:28px;background:rgba(255,255,255,.66);box-shadow:0 20px 55px rgba(48,42,79,.07)}.essay:nth-child(2){background:rgba(226,220,241,.68)}.essay:nth-child(3){grid-column:1/-1;background:rgba(214,229,239,.72)}.number{color:var(--violet);font:700 11px/1.2 ui-rounded,"PingFang SC",sans-serif;letter-spacing:.15em}.essay h2{margin:58px 0 16px;font-size:27px;line-height:1.25}.essay p{margin:0;color:var(--muted);white-space:pre-line}footer{display:flex;justify-content:space-between;gap:24px;padding:24px 0 48px;border-top:1px solid var(--line);color:var(--muted);font:500 12px/1.7 ui-rounded,"PingFang SC",sans-serif}
-    @media(max-width:700px){.hero{padding:50px 0 62px}.essays{grid-template-columns:1fr}.essay,.essay:nth-child(3){grid-column:auto;min-height:270px}footer{flex-direction:column}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-  </style>
-</head>
-<body>
-  <div class="shell">
-    <header class="top"><div class="mark">✦ 关于我</div><a class="back" href="index.html">返回</a></header>
-    <main>
-      <section class="hero"><div class="eyebrow">Private notes · 请轻声阅读</div><h1>一些没有放在<br>明面上的文字</h1><p id="archive-intro">正在辨认暗号……</p></section>
-      <section class="essays" id="essay-list" aria-label="短文列表"></section>
-    </main>
-    <footer><span>© 2026 银河系狗熊大使</span><span>访问资格只在当前浏览器标签页内保留。</span></footer>
-  </div>
-  <script>
-    const archiveSource = 'archive.json';
-    const fromBase64 = value => Uint8Array.from(atob(value), char => char.charCodeAt(0));
-    async function openArchive() {
-      const encryptedArchive = await (await fetch(archiveSource, { cache: 'no-store' })).json();
-      const password = sessionStorage.getItem('bearArchivePassword');
-      if (!password) return window.location.replace('index.html');
-      try {
-        const encoder = new TextEncoder();
-        const baseKey = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
-        const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: fromBase64(encryptedArchive.salt), iterations: 250000, hash: 'SHA-256' }, baseKey, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
-        const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromBase64(encryptedArchive.iv) }, key, fromBase64(encryptedArchive.data));
-        const archive = JSON.parse(new TextDecoder().decode(plain));
-        document.querySelector('#archive-intro').textContent = archive.intro;
-        const list = document.querySelector('#essay-list');
-        archive.essays.forEach(([title, body], index) => {
-          const article = document.createElement('article');
-          article.className = 'essay';
-          const number = document.createElement('div');
-          number.className = 'number';
-          number.textContent = `TEXT · ${String(index + 1).padStart(2, '0')}`;
-          const heading = document.createElement('h2');
-          heading.textContent = title;
-          const paragraph = document.createElement('p');
-          paragraph.textContent = body;
-          article.append(number, heading, paragraph);
-          list.append(article);
-        });
-        sessionStorage.removeItem('bearArchivePassword');
-      } catch {
-        sessionStorage.removeItem('bearArchivePassword');
-        sessionStorage.setItem('bearArchiveError', '1');
-        window.location.replace('index.html');
+    :root{
+      --ink:#2a2a28;
+      --ink-deep:#181816;
+      --muted:#777772;
+      --muted-soft:#989893;
+      --paper:#d8d8d2;
+      --paper-deep:#cbcbc5;
+      --paper-darker:#bdbdb7;
+      --line:rgba(24,24,22,.19);
+      --line-soft:rgba(24,24,22,.10);
+      --black:#191917;
+    }
+
+    *{box-sizing:border-box}
+
+    html{scroll-behavior:smooth}
+
+    body{
+      margin:0;
+      color:var(--ink);
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(255,255,255,.05),
+          rgba(0,0,0,.035)
+        ),
+        var(--paper);
+      font-family:
+        "Times New Roman",
+        "Songti SC",
+        "STSong",
+        "Noto Serif SC",
+        serif;
+      line-height:1.95;
+      letter-spacing:.005em;
+      min-height:100vh;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      z-index:-1;
+      pointer-events:none;
+      opacity:.035;
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+      mix-blend-mode:multiply;
+    }
+
+    a{color:inherit}
+
+    .shell{
+      width:min(1180px,calc(100% - 64px));
+      margin:auto;
+    }
+
+    /* =========================
+       TOP
+       ========================= */
+
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:30px;
+      padding:27px 0 18px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .mark{
+      color:#4d4d49;
+      font:
+        400 12px/1.25
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+
+    .back{
+      padding:0 0 5px;
+      border:0;
+      border-bottom:1px solid #686863;
+      border-radius:0;
+      background:transparent;
+      color:#4b4b47;
+      text-decoration:none;
+      font:
+        400 12px/1.2
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing:.05em;
+      transition:opacity .18s ease;
+    }
+
+    .back:hover{opacity:.5}
+
+    /* =========================
+       HERO
+       ========================= */
+
+    .hero{
+      position:relative;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 230px;
+      grid-template-areas:
+        "eyebrow intro"
+        "title intro";
+      column-gap:80px;
+      align-items:end;
+      min-height:520px;
+      padding:96px 0 74px;
+      border-bottom:1px solid var(--line);
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      left:64%;
+      bottom:-46px;
+      width:1px;
+      height:92px;
+      background:rgba(24,24,22,.25);
+    }
+
+    .eyebrow{
+      grid-area:eyebrow;
+      align-self:start;
+      color:#686863;
+      font:
+        400 11px/1.2
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
+
+    .hero h1{
+      grid-area:title;
+      max-width:780px;
+      margin:34px 0 0;
+      color:var(--ink-deep);
+      font-size:clamp(62px,9vw,118px);
+      font-weight:400;
+      line-height:.92;
+      letter-spacing:-.07em;
+    }
+
+    .hero p{
+      grid-area:intro;
+      align-self:end;
+      max-width:230px;
+      margin:0;
+      padding:0 0 8px 18px;
+      border-left:1px solid var(--line);
+      color:#6f6f6a;
+      font-size:13px;
+      line-height:1.85;
+    }
+
+    /* =========================
+       ESSAYS
+       ========================= */
+
+    .essays{
+      display:block;
+      padding:118px 0 130px;
+    }
+
+    .essay{
+      position:relative;
+      min-height:0;
+      margin:0 0 126px;
+      padding:0;
+      border:0;
+      border-radius:0;
+      background:transparent !important;
+      box-shadow:none;
+    }
+
+    .essay:last-child{margin-bottom:0}
+
+    .essay::before{
+      content:"";
+      display:block;
+      width:100%;
+      height:1px;
+      margin-bottom:28px;
+      background:var(--line);
+    }
+
+    .number{
+      position:absolute;
+      left:0;
+      top:30px;
+      color:#777772;
+      font:
+        400 10px/1.2
+        "Times New Roman",
+        serif;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .essay h2{
+      max-width:660px;
+      margin:0 0 48px 112px;
+      color:#20201e;
+      font-size:clamp(30px,4vw,48px);
+      font-weight:400;
+      line-height:1.1;
+      letter-spacing:-.045em;
+    }
+
+    .essay p{
+      max-width:670px;
+      margin:0 0 0 196px;
+      color:#484844;
+      white-space:pre-line;
+      font-size:16px;
+      line-height:2.06;
+    }
+
+    /* alternate the text block slightly;
+       controlled displacement rather than decorative cards */
+    .essay:nth-child(even) h2{
+      margin-left:196px;
+      max-width:610px;
+    }
+
+    .essay:nth-child(even) p{
+      margin-left:112px;
+      max-width:690px;
+    }
+
+    /* A deliberate darker interruption for the third note */
+    .essay:nth-child(3){
+      margin-top:154px;
+      margin-bottom:154px;
+      padding:54px 64px 62px;
+      background:var(--black) !important;
+    }
+
+    .essay:nth-child(3)::before{
+      margin-bottom:34px;
+      background:rgba(255,255,255,.18);
+    }
+
+    .essay:nth-child(3) .number{
+      left:64px;
+      top:86px;
+      color:#8d8d87;
+    }
+
+    .essay:nth-child(3) h2{
+      max-width:650px;
+      margin-left:108px;
+      margin-bottom:52px;
+      color:#e3e3de;
+    }
+
+    .essay:nth-child(3) p{
+      max-width:650px;
+      margin-left:108px;
+      color:#bdbdb7;
+    }
+
+    /* giant nearly-lost numbers in the background */
+    .essay::after{
+      position:absolute;
+      right:-8px;
+      top:-28px;
+      z-index:-1;
+      color:rgba(24,24,22,.045);
+      font:
+        400 clamp(100px,15vw,180px)/1
+        "Times New Roman",
+        serif;
+      letter-spacing:-.08em;
+      pointer-events:none;
+    }
+
+    .essay:nth-child(1)::after{content:"01"}
+    .essay:nth-child(2)::after{content:"02"}
+    .essay:nth-child(3)::after{
+      content:"03";
+      z-index:0;
+      right:28px;
+      top:18px;
+      color:rgba(255,255,255,.035);
+    }
+
+    .essay:nth-child(3) > *{
+      position:relative;
+      z-index:1;
+    }
+
+    /* =========================
+       FOOTER
+       ========================= */
+
+    footer{
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      padding:26px 0 50px;
+      border-top:1px solid var(--line);
+      color:#777772;
+      font:
+        400 11px/1.65
+        "Times New Roman",
+        "Songti SC",
+        serif;
+      letter-spacing:.025em;
+    }
+
+    /* =========================
+       MOBILE
+       ========================= */
+
+    @media(max-width:760px){
+      .shell{
+        width:min(100% - 28px,1180px);
+      }
+
+      .top{
+        padding-top:22px;
+      }
+
+      .hero{
+        grid-template-columns:1fr;
+        grid-template-areas:
+          "eyebrow"
+          "title"
+          "intro";
+        min-height:auto;
+        padding:72px 0 68px;
+      }
+
+      .hero::after{display:none}
+
+      .hero h1{
+        margin-top:28px;
+        font-size:clamp(56px,18vw,88px);
+      }
+
+      .hero p{
+        max-width:420px;
+        margin-top:38px;
+        padding-left:14px;
+      }
+
+      .essays{
+        padding:84px 0 96px;
+      }
+
+      .essay{
+        margin-bottom:90px;
+      }
+
+      .number{
+        position:static;
+        margin-bottom:16px;
+      }
+
+      .essay h2,
+      .essay:nth-child(even) h2{
+        margin:0 0 32px;
+        max-width:none;
+        font-size:clamp(29px,9vw,40px);
+      }
+
+      .essay p,
+      .essay:nth-child(even) p{
+        margin:0;
+        max-width:none;
+        font-size:15px;
+        line-height:2;
+      }
+
+      .essay:nth-child(3){
+        margin-top:100px;
+        margin-bottom:100px;
+        padding:38px 24px 44px;
+      }
+
+      .essay:nth-child(3) .number{
+        position:static;
+        margin-bottom:16px;
+      }
+
+      .essay:nth-child(3) h2,
+      .essay:nth-child(3) p{
+        margin-left:0;
+        max-width:none;
+      }
+
+      .essay::after{
+        top:-4px;
+        right:0;
+        font-size:90px;
+      }
+
+      .essay:nth-child(3)::after{
+        top:12px;
+        right:15px;
+      }
+
+      footer{
+        flex-direction:column;
+        gap:8px;
       }
     }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+
+    <header class="top">
+      <div class="mark">✦ 关于我</div>
+      <a class="back" href="index.html">返回</a>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <div class="eyebrow">Private notes · 请轻声阅读</div>
+        <h1>一些没有放在<br>明面上的文字</h1>
+        <p id="archive-intro">正在辨认暗号……</p>
+      </section>
+
+      <section
+        class="essays"
+        id="essay-list"
+        aria-label="短文列表">
+      </section>
+
+    </main>
+
+    <footer>
+      <span>© 2026 银河系狗熊大使</span>
+      <span>访问资格只在当前浏览器标签页内保留。</span>
+    </footer>
+
+  </div>
+
+  <script>
+    const archiveSource = 'archive.json';
+
+    const fromBase64 =
+      value =>
+        Uint8Array.from(
+          atob(value),
+          char => char.charCodeAt(0)
+        );
+
+    async function openArchive() {
+
+      const encryptedArchive =
+        await (
+          await fetch(
+            archiveSource,
+            { cache: 'no-store' }
+          )
+        ).json();
+
+      const password =
+        sessionStorage.getItem(
+          'bearArchivePassword'
+        );
+
+      if (!password) {
+        return window.location.replace(
+          'index.html'
+        );
+      }
+
+      try {
+
+        const encoder =
+          new TextEncoder();
+
+        const baseKey =
+          await crypto.subtle.importKey(
+            'raw',
+            encoder.encode(password),
+            'PBKDF2',
+            false,
+            ['deriveKey']
+          );
+
+        const key =
+          await crypto.subtle.deriveKey(
+            {
+              name: 'PBKDF2',
+              salt:
+                fromBase64(
+                  encryptedArchive.salt
+                ),
+              iterations: 250000,
+              hash: 'SHA-256'
+            },
+            baseKey,
+            {
+              name: 'AES-GCM',
+              length: 256
+            },
+            false,
+            ['decrypt']
+          );
+
+        const plain =
+          await crypto.subtle.decrypt(
+            {
+              name: 'AES-GCM',
+              iv:
+                fromBase64(
+                  encryptedArchive.iv
+                )
+            },
+            key,
+            fromBase64(
+              encryptedArchive.data
+            )
+          );
+
+        const archive =
+          JSON.parse(
+            new TextDecoder()
+              .decode(plain)
+          );
+
+        document
+          .querySelector(
+            '#archive-intro'
+          )
+          .textContent =
+            archive.intro;
+
+        const list =
+          document.querySelector(
+            '#essay-list'
+          );
+
+        archive.essays
+          .forEach(
+            ([title, body], index) => {
+
+              const article =
+                document.createElement(
+                  'article'
+                );
+
+              article.className =
+                'essay';
+
+              const number =
+                document.createElement(
+                  'div'
+                );
+
+              number.className =
+                'number';
+
+              number.textContent =
+                `TEXT · ${
+                  String(index + 1)
+                    .padStart(2, '0')
+                }`;
+
+              const heading =
+                document.createElement(
+                  'h2'
+                );
+
+              heading.textContent =
+                title;
+
+              const paragraph =
+                document.createElement(
+                  'p'
+                );
+
+              paragraph.textContent =
+                body;
+
+              article.append(
+                number,
+                heading,
+                paragraph
+              );
+
+              list.append(article);
+
+            }
+          );
+
+        sessionStorage.removeItem(
+          'bearArchivePassword'
+        );
+
+      } catch {
+
+        sessionStorage.removeItem(
+          'bearArchivePassword'
+        );
+
+        sessionStorage.setItem(
+          'bearArchiveError',
+          '1'
+        );
+
+        window.location.replace(
+          'index.html'
+        );
+      }
+    }
+
     openArchive();
   </script>
 </body>
 </html>
-
