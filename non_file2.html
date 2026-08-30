@@ -1,0 +1,1838 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6057a6">
+  <title>这里放第一篇文章标题 · 银河系狗熊大使</title>
+<style>
+  :root {
+    --ink: #23213a;
+    --muted: #706e83;
+    --paper: #f7f4ee;
+    --card: rgba(255, 255, 255, .72);
+    --line: rgba(35, 33, 58, .13);
+    --violet: #6659a7;
+    --blue: #7da8c9;
+    --yellow: #f0c96d;
+    --shadow: 0 22px 60px rgba(49, 43, 84, .10);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+
+    background:
+      radial-gradient(
+        circle at 8% 8%,
+        rgba(125, 168, 201, .22),
+        transparent 25rem
+      ),
+      radial-gradient(
+        circle at 88% 18%,
+        rgba(240, 201, 109, .20),
+        transparent 22rem
+      ),
+      var(--paper);
+
+    font-family:
+      "Noto Serif SC",
+      "Songti SC",
+      "STSong",
+      Georgia,
+      serif;
+
+    line-height: 1.8;
+  }
+
+
+  /* =========================
+     整篇文章
+     不再使用巨大白色外框
+     ========================= */
+
+  .essay {
+    position: relative;
+
+    width: min(
+      960px,
+      calc(100% - 36px)
+    );
+
+    margin: 0 auto;
+    padding: 72px 0 120px;
+  }
+
+
+  /* =========================
+     文章标题
+     做得更像首页 Hero
+     ========================= */
+
+  .essay-header {
+    position: relative;
+
+    max-width: 820px;
+
+    margin:
+      30px auto
+      110px;
+
+    padding:
+      36px 20px
+      20px;
+  }
+
+
+  .essay-header::before {
+    content: "✦";
+
+    position: absolute;
+    top: -20px;
+    right: 6%;
+
+    color: var(--yellow);
+
+    font-size: 38px;
+
+    transform: rotate(12deg);
+  }
+
+
+  .essay-header::after {
+    content: "·";
+
+    position: absolute;
+    left: -10px;
+    bottom: -20px;
+
+    color: var(--blue);
+
+    font-size: 64px;
+  }
+
+
+  .essay-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: var(--violet);
+
+    font:
+      700 13px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    letter-spacing: .15em;
+    text-transform: uppercase;
+  }
+
+
+  .essay-header .eyebrow::before {
+    content: "";
+
+    width: 28px;
+    height: 2px;
+
+    background: currentColor;
+  }
+
+
+  .essay-header h1 {
+    max-width: 780px;
+
+    margin: 22px 0 24px;
+
+    font-size:
+      clamp(
+        46px,
+        7vw,
+        78px
+      );
+
+    font-weight: 800;
+    line-height: 1.05;
+
+    letter-spacing: -.055em;
+  }
+
+
+  .essay-meta {
+    max-width: 560px;
+
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 15px;
+  }
+
+
+  /* =========================
+     写在前面
+     像首页 About 那种轻卡片
+     ========================= */
+
+  .essay-preface {
+    position: relative;
+
+    max-width: 760px;
+
+    margin:
+      0 auto
+      110px;
+
+    padding:
+      38px
+      clamp(28px, 6vw, 58px);
+
+    border: 1px solid var(--line);
+    border-radius: 30px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, .76),
+        rgba(229, 223, 240, .58)
+      );
+
+    box-shadow: var(--shadow);
+
+    transform: rotate(-.35deg);
+  }
+
+
+  .essay-preface::after {
+    content: "☾";
+
+    position: absolute;
+    right: 26px;
+    bottom: 15px;
+
+    color: rgba(102, 89, 167, .20);
+
+    font-size: 46px;
+  }
+
+
+  .essay-preface .section-number {
+    margin-bottom: 18px;
+
+    color: var(--violet);
+
+    font:
+      750 12px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    letter-spacing: .16em;
+  }
+
+
+  /* =========================
+     每个章节
+     ========================= */
+
+  .essay-section {
+    position: relative;
+
+    margin:
+      0 auto
+      115px;
+
+    padding:
+      clamp(34px, 6vw, 64px);
+
+    border: 1px solid var(--line);
+    border-radius: 32px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .62
+      );
+
+    box-shadow:
+      0 16px 45px
+      rgba(
+        49,
+        43,
+        84,
+        .07
+      );
+
+    backdrop-filter:
+      blur(12px);
+  }
+
+
+  /*
+    三种颜色轮换，
+    对应首页三张作品卡
+  */
+
+  .essay-section:nth-of-type(3n + 1) {
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .68
+      );
+  }
+
+
+  .essay-section:nth-of-type(3n + 2) {
+    background:
+      rgba(
+        227,
+        221,
+        241,
+        .58
+      );
+  }
+
+
+  .essay-section:nth-of-type(3n) {
+    background:
+      rgba(
+        214,
+        229,
+        239,
+        .60
+      );
+  }
+
+
+  /*
+    很轻微的不规则感，
+    和首页 card hover / mascot 呼应
+  */
+
+  .essay-section:nth-of-type(even) {
+    transform: rotate(.18deg);
+  }
+
+
+  .essay-section:nth-of-type(odd) {
+    transform: rotate(-.12deg);
+  }
+
+
+  /* =========================
+     章节标题
+     ========================= */
+
+  .section-title {
+    display: flex;
+
+    align-items:
+      center;
+
+    gap: 18px;
+
+    margin-bottom: 42px;
+  }
+
+
+  .section-index {
+    display: grid;
+
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    width: 44px;
+    height: 44px;
+
+    border:
+      1px solid
+      rgba(
+        102,
+        89,
+        167,
+        .18
+      );
+
+    border-radius:
+      15px 15px 18px 18px;
+
+    color: var(--violet);
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .72
+      );
+
+    box-shadow:
+      0 6px 18px
+      rgba(
+        49,
+        43,
+        84,
+        .07
+      );
+
+    font:
+      800 15px/1
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    transform:
+      rotate(-4deg);
+  }
+
+
+  .section-title h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-size:
+      clamp(
+        27px,
+        4vw,
+        40px
+      );
+
+    line-height: 1.2;
+
+    letter-spacing:
+      -.04em;
+  }
+
+
+  /* =========================
+     正文
+     ========================= */
+
+  .essay-section p,
+  .essay-preface p {
+    max-width: 680px;
+
+    margin:
+      0 auto
+      1.65em;
+
+    color:
+      #454258;
+
+    font-size:
+      17px;
+
+    line-height:
+      2.05;
+
+    letter-spacing:
+      .015em;
+
+    /*
+      不使用 justify。
+      中文 justify 很容易产生
+      那种公众号 / Word 文档感。
+    */
+    text-align:
+      left;
+  }
+
+
+  .essay-section p:last-child,
+  .essay-preface p:last-child {
+    margin-bottom: 0;
+  }
+
+
+  /* =========================
+     图片
+     ========================= */
+
+  .essay-image {
+    position: relative;
+
+    max-width: 640px;
+
+    margin:
+      5px auto
+      48px;
+  }
+
+
+  .essay-image img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    border:
+      1px solid
+      rgba(
+        35,
+        33,
+        58,
+        .10
+      );
+
+    border-radius:
+      20px;
+
+    box-shadow:
+      0 13px 35px
+      rgba(
+        49,
+        43,
+        84,
+        .10
+      );
+  }
+
+
+  /*
+    一个很轻的小装饰，
+    不让图片看起来像普通博客配图
+  */
+
+  .essay-image::before {
+    content: "✦";
+
+    position: absolute;
+
+    top: -18px;
+    left: -18px;
+
+    z-index: 2;
+
+    color: var(--yellow);
+
+    font-size: 25px;
+
+    transform:
+      rotate(-10deg);
+  }
+
+
+  .essay-image-wide {
+    max-width: 720px;
+  }
+
+
+  .essay-image-portrait {
+    max-width: 450px;
+  }
+
+
+  /* =========================
+     结语
+     单独给一点黄色
+     ========================= */
+
+  .essay-ending {
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 255, 255, .73),
+        rgba(240, 201, 109, .18)
+      );
+  }
+
+
+  .essay-ending .section-index {
+    color:
+      #886b25;
+
+    background:
+      rgba(
+        240,
+        201,
+        109,
+        .30
+      );
+  }
+
+
+  .essay-ending p:last-of-type {
+    color: var(--ink);
+
+    font-weight: 600;
+  }
+
+
+  /* =========================
+     上一篇 / 下一篇
+     ========================= */
+
+  .article-nav {
+    display: flex;
+
+    justify-content:
+      space-between;
+
+    gap: 14px;
+
+    max-width: 760px;
+
+    margin:
+      30px auto
+      0;
+
+    padding-top: 20px;
+  }
+
+
+  .article-nav .chip {
+    border:
+      1px solid
+      var(--line);
+
+    border-radius:
+      999px;
+
+    background:
+      rgba(
+        255,
+        255,
+        255,
+        .55
+      );
+
+    padding:
+      9px 16px;
+
+    color:
+      var(--ink);
+
+    text-decoration:
+      none;
+
+    font:
+      600 13px/1.2
+      ui-rounded,
+      "PingFang SC",
+      sans-serif;
+
+    transition:
+      transform .2s ease,
+      background .2s ease;
+  }
+
+
+  .article-nav .chip:hover {
+    transform:
+      translateY(-2px)
+      rotate(-1deg);
+
+    background: #fff;
+  }
+
+
+  /* =========================
+     手机
+     ========================= */
+
+  @media (max-width: 650px) {
+
+    .essay {
+      width:
+        min(
+          100% - 24px,
+          960px
+        );
+
+      padding:
+        35px 0
+        75px;
+    }
+
+
+    .essay-header {
+      margin-bottom:
+        65px;
+
+      padding:
+        28px 12px
+        10px;
+    }
+
+
+    .essay-header h1 {
+      font-size:
+        clamp(
+          40px,
+          13vw,
+          60px
+        );
+    }
+
+
+    .essay-preface {
+      margin-bottom:
+        70px;
+
+      padding:
+        28px 24px;
+
+      border-radius:
+        24px;
+    }
+
+
+    .essay-section {
+      margin-bottom:
+        60px;
+
+      padding:
+        30px 22px;
+
+      border-radius:
+        25px;
+    }
+
+
+    .section-title {
+      gap: 13px;
+
+      margin-bottom:
+        28px;
+    }
+
+
+    .section-index {
+      width: 38px;
+      height: 38px;
+
+      border-radius:
+        13px;
+
+      font-size:
+        13px;
+    }
+
+
+    .section-title h2 {
+      font-size:
+        25px;
+    }
+
+
+    .essay-section p,
+    .essay-preface p {
+      font-size:
+        16px;
+
+      line-height:
+        1.95;
+    }
+
+
+    .essay-image {
+      margin-bottom:
+        34px;
+    }
+
+
+    .essay-image img {
+      border-radius:
+        16px;
+    }
+
+
+    .article-nav {
+      flex-direction:
+        column;
+    }
+
+  }
+
+
+  @media (
+    prefers-reduced-motion:
+    reduce
+  ) {
+
+    *,
+    *::before,
+    *::after {
+      transition:
+        none !important;
+    }
+
+  }
+</style>
+
+<style id="cold-editorial-article-overrides">
+  /* =========================================================
+     Cold editorial article page
+     Matches the monochrome / restrained homepage redesign.
+     ========================================================= */
+
+  :root {
+    --ink: #171717;
+    --muted: #77736f;
+    --paper: #f5f5f2;
+    --card: transparent;
+    --line: rgba(20,20,20,.18);
+    --violet: #555;
+    --blue: #777;
+    --yellow: #999;
+    --shadow: none;
+  }
+
+  html {
+    background: var(--paper);
+  }
+
+  body {
+    margin: 0;
+    color: var(--ink);
+    background: var(--paper);
+    font-family:
+      "Times New Roman",
+      "Songti SC",
+      "STSong",
+      "Noto Serif SC",
+      serif;
+    line-height: 1.75;
+    letter-spacing: .002em;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* ---------- site chrome ---------- */
+
+  .shell {
+    width: min(1320px, calc(100% - 96px));
+    margin: 0 auto;
+  }
+
+  .topbar {
+    min-height: 92px;
+    padding: 30px 0 18px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--ink);
+    text-decoration: none;
+    font:
+      400 15px/1.2
+      "Times New Roman",
+      "Songti SC",
+      serif;
+    letter-spacing: .02em;
+  }
+
+  .bear-dot {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    color: var(--ink);
+    font-size: 15px;
+    filter: grayscale(1);
+    transform: none;
+  }
+
+  .right-tools {
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+  }
+
+  .chip {
+    display: inline-block;
+    padding: 2px 0 5px;
+    border: 0;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    color: var(--ink);
+    background: transparent;
+    text-decoration: none;
+    font:
+      400 14px/1.25
+      "Times New Roman",
+      "Songti SC",
+      serif;
+    transition:
+      opacity .18s ease,
+      border-color .18s ease;
+  }
+
+  .chip:hover {
+    transform: none;
+    background: transparent;
+    border-color: currentColor;
+    opacity: .58;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    font:
+      400 12px/1.2
+      "Times New Roman",
+      "Songti SC",
+      serif;
+  }
+
+  .lang-switch button {
+    padding: 2px 4px;
+    border: 0;
+    border-radius: 0;
+    color: #8a8a86;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .lang-switch button.active {
+    color: var(--ink);
+    background: transparent;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  /* ---------- essay frame ---------- */
+
+  .essay {
+    width: min(1080px, 100%);
+    margin: 0 auto;
+    padding: 0 0 126px;
+  }
+
+  /* ---------- article hero ---------- */
+
+  .essay-header {
+    max-width: none;
+    margin: 0;
+    padding: 112px 0 122px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .essay-header::before,
+  .essay-header::after {
+    display: none;
+  }
+
+  .essay-header .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #6c6c69;
+    font:
+      400 12px/1.2
+      "Times New Roman",
+      "Songti SC",
+      serif;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+  }
+
+  .essay-header .eyebrow::before {
+    width: 36px;
+    height: 1px;
+    background: #767676;
+  }
+
+  .essay-header h1 {
+    max-width: 860px;
+    margin: 34px 0 28px;
+    font-size: clamp(72px, 10vw, 132px);
+    font-weight: 400;
+    line-height: .92;
+    letter-spacing: -.07em;
+  }
+
+  .essay-meta {
+    max-width: 560px;
+    margin: 0;
+    color: #727272;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ---------- preface ---------- */
+
+  .essay-preface {
+    position: relative;
+    max-width: 760px;
+    margin: 96px auto 128px;
+    padding: 0 0 34px 112px;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .essay-preface::after {
+    display: none;
+  }
+
+  .essay-preface .section-number {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    margin: 0;
+    color: #777;
+    font:
+      400 11px/1.2
+      "Times New Roman",
+      "Songti SC",
+      serif;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- sections ---------- */
+
+  .essay-section,
+  .essay-section:nth-of-type(3n + 1),
+  .essay-section:nth-of-type(3n + 2),
+  .essay-section:nth-of-type(3n),
+  .essay-ending {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto 138px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    transform: none;
+  }
+
+  .section-title {
+    display: grid;
+    grid-template-columns: 72px 1fr;
+    align-items: start;
+    gap: 26px;
+    margin-bottom: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  .section-index,
+  .essay-ending .section-index {
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 4px 0 0;
+    border: 0;
+    border-radius: 0;
+    color: #8a8a86;
+    background: transparent;
+    box-shadow: none;
+    font:
+      400 12px/1
+      "Times New Roman",
+      serif;
+    letter-spacing: .12em;
+    transform: none;
+  }
+
+  .section-title h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(32px, 4.6vw, 54px);
+    font-weight: 400;
+    line-height: 1.14;
+    letter-spacing: -.045em;
+  }
+
+  /* ---------- body copy ---------- */
+
+  .essay-section p,
+  .essay-preface p {
+    max-width: 680px;
+    margin: 0 auto 1.72em;
+    color: #3f3f3d;
+    font-size: 17px;
+    line-height: 2.08;
+    letter-spacing: .012em;
+    text-align: left;
+  }
+
+  .essay-preface p {
+    max-width: none;
+  }
+
+  .essay-section p:last-child,
+  .essay-preface p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ---------- images ---------- */
+
+  .essay-image,
+  .essay-image-wide,
+  .essay-image-portrait {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto 58px;
+  }
+
+  .essay-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    filter: grayscale(1) contrast(1.08) brightness(.96);
+  }
+
+  .essay-image::before {
+    display: none;
+  }
+
+  .essay-image-portrait {
+    max-width: 560px;
+    margin-left: 0;
+  }
+
+  /* give images a quiet editorial caption-like rule */
+  .essay-image::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 1px;
+    margin-top: 14px;
+    background: rgba(20,20,20,.13);
+  }
+
+  /* ---------- ending ---------- */
+
+  .essay-ending {
+    padding-bottom: 8px;
+  }
+
+  .essay-ending p:last-of-type {
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  /* ---------- article nav ---------- */
+
+  .article-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    max-width: 880px;
+    margin: 16px auto 0;
+    padding: 28px 0 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .article-nav .chip {
+    padding: 4px 0 6px;
+    border: 0;
+    border-bottom: 1px solid #555;
+    border-radius: 0;
+    background: transparent;
+    font:
+      400 14px/1.2
+      "Times New Roman",
+      "Songti SC",
+      serif;
+  }
+
+  .article-nav .chip:hover {
+    transform: none;
+    background: transparent;
+    opacity: .55;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 28px;
+    padding: 34px 0 54px;
+    border-top: 1px solid var(--line);
+    color: #858581;
+    font:
+      400 11px/1.5
+      "Times New Roman",
+      "Songti SC",
+      serif;
+  }
+
+  /* ---------- mobile ---------- */
+
+  @media (max-width: 760px) {
+    .shell {
+      width: min(100% - 30px, 1320px);
+    }
+
+    .topbar {
+      min-height: 76px;
+      padding: 22px 0 15px;
+    }
+
+    .right-tools {
+      gap: 14px;
+    }
+
+    .right-tools > .chip {
+      font-size: 12px;
+    }
+
+    .essay {
+      padding-bottom: 84px;
+    }
+
+    .essay-header {
+      padding: 72px 0 78px;
+    }
+
+    .essay-header h1 {
+      font-size: clamp(58px, 20vw, 92px);
+      margin-top: 26px;
+    }
+
+    .essay-preface {
+      margin: 70px auto 90px;
+      padding: 0 0 28px;
+    }
+
+    .essay-preface .section-number {
+      position: static;
+      margin-bottom: 20px;
+    }
+
+    .essay-section,
+    .essay-ending {
+      margin-bottom: 92px;
+    }
+
+    .section-title {
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      margin-bottom: 38px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(28px, 8vw, 38px);
+    }
+
+    .essay-section p,
+    .essay-preface p {
+      font-size: 16px;
+      line-height: 2;
+    }
+
+    .essay-image,
+    .essay-image-wide,
+    .essay-image-portrait {
+      margin-bottom: 42px;
+    }
+
+    .essay-image-portrait {
+      max-width: 100%;
+    }
+
+    .article-nav {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    footer {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .shell {
+      width: min(100% - 24px, 1320px);
+    }
+
+    .brand {
+      font-size: 13px;
+    }
+
+    .right-tools {
+      gap: 10px;
+    }
+
+    .right-tools > .chip {
+      max-width: 96px;
+    }
+
+    .essay-header .eyebrow {
+      font-size: 10px;
+    }
+
+    .article-nav {
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
+  }
+</style>
+
+
+<style id="cold-editorial-tension">
+  /* =========================================================
+     Version 2: cold, but with more editorial tension
+     Monochrome + asymmetry + scale contrast + controlled rhythm
+     ========================================================= */
+
+  /* make the page feel more like a designed spread */
+  .essay {
+    width: min(1160px, 100%);
+  }
+
+  /* HERO: move away from centered blog title */
+  .essay-header {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr minmax(180px, .34fr);
+    grid-template-areas:
+      "eyebrow meta"
+      "title   title";
+    column-gap: 56px;
+    align-items: end;
+    padding: 118px 0 96px;
+  }
+
+  .essay-header .eyebrow {
+    grid-area: eyebrow;
+    align-self: start;
+  }
+
+  .essay-header h1 {
+    grid-area: title;
+    margin: 38px 0 0;
+    font-size: clamp(92px, 13vw, 176px);
+    line-height: .78;
+    letter-spacing: -.085em;
+  }
+
+  .essay-meta {
+    grid-area: meta;
+    justify-self: end;
+    max-width: 230px;
+    padding: 0 0 8px 18px;
+    border-left: 1px solid var(--line);
+    color: #777;
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  /* thin vertical anchor gives the page a stronger axis */
+  .essay-header::after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 25%;
+    bottom: -56px;
+    width: 1px;
+    height: 112px;
+    background: rgba(20,20,20,.22);
+  }
+
+  /* PREFACE: a severe black editorial insert */
+  .essay-preface {
+    max-width: 820px;
+    margin: 126px 0 144px auto;
+    padding: 44px 54px 46px 154px;
+    background: #171717;
+    color: #f1f1ed;
+    border: 0;
+  }
+
+  .essay-preface .section-number {
+    left: 46px;
+    top: 51px;
+    color: #a9a9a3;
+  }
+
+  .essay-preface p {
+    color: #ddddda;
+    font-size: 16px;
+    line-height: 2;
+  }
+
+  /* SECTION STRUCTURE:
+     section title becomes a spread-like header with huge ghost number */
+  .essay-section,
+  .essay-ending {
+    max-width: 980px;
+    margin-bottom: 158px;
+  }
+
+  .section-title {
+    position: relative;
+    grid-template-columns: 92px 1fr;
+    gap: 28px;
+    min-height: 116px;
+    margin-bottom: 56px;
+    padding: 30px 0 0;
+    overflow: visible;
+  }
+
+  .section-index,
+  .essay-ending .section-index {
+    position: relative;
+    z-index: 2;
+    padding-top: 7px;
+    color: #777;
+    font-size: 12px;
+  }
+
+  .section-index::after {
+    content: attr(data-ghost);
+  }
+
+  /* use actual visible section number as a giant watermark via adjacent selector */
+  .section-title .section-index {
+    font-variant-numeric: lining-nums;
+  }
+
+  .section-title .section-index::before {
+    content: "";
+  }
+
+  .section-title h2 {
+    position: relative;
+    z-index: 2;
+    max-width: 680px;
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.05;
+  }
+
+  /* giant number behind title, populated by nth section */
+  .essay-section .section-title::after {
+    position: absolute;
+    right: -8px;
+    top: -26px;
+    color: rgba(20,20,20,.055);
+    font: 400 clamp(110px, 16vw, 190px)/1 "Times New Roman", serif;
+    letter-spacing: -.08em;
+    pointer-events: none;
+  }
+
+  .essay-section:nth-of-type(1) .section-title::after { content: "01"; }
+  .essay-section:nth-of-type(2) .section-title::after { content: "02"; }
+  .essay-section:nth-of-type(3) .section-title::after { content: "03"; }
+  .essay-section:nth-of-type(4) .section-title::after { content: "04"; }
+  .essay-section:nth-of-type(5) .section-title::after { content: "05"; }
+
+  /* BODY: create an offset editorial column instead of one neutral centered block */
+  .essay-section p {
+    max-width: 640px;
+    margin-left: 166px;
+    margin-right: auto;
+  }
+
+  /* opening paragraph gets a subtle lead-in rule */
+  .essay-section > p:first-of-type {
+    position: relative;
+  }
+
+  .essay-section > p:first-of-type::before {
+    content: "";
+    position: absolute;
+    left: -54px;
+    top: .72em;
+    width: 32px;
+    height: 1px;
+    background: rgba(20,20,20,.35);
+  }
+
+  /* IMAGES: alternate placements so the page has movement */
+  .essay-image,
+  .essay-image-wide {
+    max-width: 760px;
+    margin: 0 0 62px auto;
+  }
+
+  .essay-section:nth-of-type(even) .essay-image,
+  .essay-section:nth-of-type(even) .essay-image-wide {
+    margin-left: 0;
+    margin-right: auto;
+  }
+
+  .essay-image-portrait {
+    max-width: 470px;
+    margin-left: auto;
+    margin-right: 82px;
+  }
+
+  .essay-image img {
+    filter: grayscale(1) contrast(1.13) brightness(.92);
+  }
+
+  /* alternate a slightly cropped cinematic feel for wide images */
+  .essay-image-wide img {
+    max-height: 520px;
+    object-fit: cover;
+  }
+
+  .essay-image::after {
+    width: 44%;
+    margin-top: 15px;
+    background: rgba(20,20,20,.23);
+  }
+
+  .essay-section:nth-of-type(even) .essay-image::after {
+    margin-left: auto;
+  }
+
+  /* one deliberate disruption: section 03 becomes a wider spread */
+  .essay-section:nth-of-type(3) {
+    max-width: 1080px;
+  }
+
+  .essay-section:nth-of-type(3) .section-title h2 {
+    max-width: 760px;
+  }
+
+  .essay-section:nth-of-type(3) p {
+    margin-left: 220px;
+    max-width: 660px;
+  }
+
+  /* ENDING: light gray field, not a soft card */
+  .essay-ending {
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: 0;
+    padding: 54px 62px 60px;
+    background: #e7e7e2;
+  }
+
+  .essay-ending .section-title {
+    border-top-color: rgba(20,20,20,.28);
+  }
+
+  .essay-ending p {
+    margin-left: 118px;
+    max-width: 620px;
+  }
+
+  /* navigation with more visual weight */
+  .article-nav {
+    max-width: 980px;
+    margin-top: -22px;
+    padding-top: 34px;
+  }
+
+  .article-nav .chip {
+    font-size: 16px;
+    padding-bottom: 8px;
+  }
+
+  /* subtle hover: images dim rather than animate around */
+  .essay-image img {
+    transition: opacity .25s ease, filter .25s ease;
+  }
+
+  .essay-image:hover img {
+    opacity: .88;
+    filter: grayscale(1) contrast(1.18) brightness(.88);
+  }
+
+  @media (max-width: 900px) {
+    .essay-header {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "eyebrow"
+        "title"
+        "meta";
+    }
+
+    .essay-header h1 {
+      font-size: clamp(80px, 18vw, 132px);
+      line-height: .82;
+    }
+
+    .essay-meta {
+      justify-self: start;
+      max-width: 420px;
+      margin-top: 36px;
+      padding-left: 16px;
+    }
+
+    .essay-header::after {
+      display: none;
+    }
+
+    .essay-preface {
+      margin-left: 0;
+      padding-left: 118px;
+    }
+
+    .essay-preface .section-number {
+      left: 32px;
+    }
+
+    .essay-section p,
+    .essay-section:nth-of-type(3) p {
+      margin-left: 98px;
+    }
+
+    .essay-ending p {
+      margin-left: 76px;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .essay-header {
+      padding-top: 76px;
+      padding-bottom: 70px;
+    }
+
+    .essay-header h1 {
+      margin-top: 28px;
+      font-size: clamp(68px, 24vw, 104px);
+    }
+
+    .essay-preface {
+      margin-top: 82px;
+      margin-bottom: 98px;
+      padding: 34px 28px;
+    }
+
+    .essay-preface .section-number {
+      position: static;
+      margin-bottom: 22px;
+    }
+
+    .essay-section,
+    .essay-ending {
+      margin-bottom: 100px;
+    }
+
+    .section-title {
+      grid-template-columns: 38px 1fr;
+      min-height: 90px;
+      gap: 12px;
+      margin-bottom: 38px;
+    }
+
+    .essay-section .section-title::after {
+      top: -6px;
+      right: 0;
+      font-size: 96px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(30px, 9vw, 42px);
+    }
+
+    .essay-section p,
+    .essay-section:nth-of-type(3) p,
+    .essay-ending p {
+      margin-left: 0;
+      max-width: none;
+    }
+
+    .essay-section > p:first-of-type::before {
+      display: none;
+    }
+
+    .essay-image,
+    .essay-image-wide,
+    .essay-image-portrait,
+    .essay-section:nth-of-type(even) .essay-image,
+    .essay-section:nth-of-type(even) .essay-image-wide {
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .essay-ending {
+      padding: 36px 24px 40px;
+    }
+
+    .article-nav .chip {
+      font-size: 14px;
+    }
+  }
+</style>
+
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="index.html" data-aria-zh="返回主页" data-aria-en="Back home" aria-label="返回主页">
+        <span class="bear-dot">🐾</span> tiyu.me
+      </a>
+      <div class="right-tools">
+        <a class="chip" href="index.html#work" data-zh="← 返回作品柜" data-en="← Back to work">← 返回作品柜</a>
+        <span class="lang-switch" aria-label="语言切换">
+          <button type="button" data-set-lang="zh">中</button><span>/</span><button type="button" data-set-lang="en">EN</button>
+        </span>
+      </div>
+    </header>
+
+    <main>
+     <article class="essay">
+
+```html
+<main>
+  <article class="essay">
+
+    <header class="essay-header">
+      <div class="eyebrow">Non-paper writing · 01</div>
+
+      <h1>果果，你好。</h1>
+
+      <p class="essay-meta">
+        2026.8.30
+      </p>
+    </header>
+
+
+    <section class="essay-preface">
+
+      <div class="section-number">写在前面</div>
+
+      <p>
+        果果，你好。
+      </p>
+
+      <p>
+        我知道你并不在意这个网页了，所以我也并不知道你能不能看到我写的东西。我想说却没说的话太多了，鉴于事到如今我也没有别的东西可供失去，所以我决定写在这里。这是一种对你的眼睛、大脑的冒犯。抱歉了。
+      </p>
+
+    </section>
+
+
+    <section class="essay-section">
+
+      <p>
+        我的脑子在日新月异地发育，我逐渐不能理解过去的自己。我不明白为什么过去的我不能接受你有那么多要好的朋友。我不明白朋友圈里的你为什么总是那么快乐。我不明白为什么你的快乐永远跟我没有一丝一毫的关系。我不明白跟你在一起的时候我为什么能感受到那么多忧愁。弥漫的悲伤的基调让我困惑。我不知道你遇到了什么。我困惑得快要恨我自己。我一边觉得你对我完全不一样，一边觉得自己无足轻重。问号是耐久的。我有那么多问号。于是我有那么多痛苦。这是我全部的混乱。
+      </p>
+
+      <p>
+        我现在明白了我为什么能看到一个悲伤的不透明的你。我也能明白情绪与事实是完全不同的暴露。我明白你最脆弱和最坚韧的结构都长在了同一块地方。我太迟了。
+      </p>
+
+      <p>
+        我也有很多不愿意告诉你的事情。主要是我的ASD情况。我进入大学时过得糟糕透顶。我的作息被集体宿舍完全打烂，我的洗澡规划被供水时间左右，我的出行时间被零碎的课程安排粉碎，我的学习基地被图书馆空座的随机刷新破坏，我的食谱被食堂的排队人群阉割，我的课堂被全包围密堆积的气味击溃，此乃对ASD毁灭性打击。我用尽全力保持看上去正常，而学习是保持正常之后才能做的事。你是我跳出上述精神状态的秘诀。
+      </p>
+
+      <p>
+        没有你的空间里我过度警觉、极度恐慌，于是在有你的地方反弹出巨大的积极乐观、稳定平静。这是我的复活按钮，于是我疯狂地按它，我控制不住自己。我在你上一次给我写信后深刻反省了这件事。我们都过得很辛苦，你用真实面对我，我的真实在有你的空间里被驱散殆尽。这是安全的我，但不是真实的我。我羞耻于向你说明这件事。所以在我失去了恐慌避难所、失去了自由、失去了最重要的人以后，我感觉生活像海啸。我不明白我对你的感情是否有别于吊在悬崖的人对手里扒着的最后一块石头的感情。
+      </p>
+
+      <p>
+        冬天在南门吃烧烤的时候你问过我问题。燕南饭后我们也谈到过这些问题。我在你少见的直白的时候选择了模糊的方式回答，我是混蛋。我现在越来越意识到，我因为不知道如何解释自己的情感，于是无法对自己的情感负责，进而毫无理由地以己度人质疑你对自己的情感的感受能力和负责水平。于是我任由自己站在风险躲避的角度。现在我才能意识到这对你是多大的伤害。于是你问我话时的表情、头向左歪的幅度、向下的眼神、奇怪的笑、你的步幅反复地出现在我的回忆里。我非常非常抱歉，我一万次希望自己回到那些时候，然后说实话。
+      </p>
+
+      <p>
+        就在我以为我要不对自己负责地沿着这条死路一路栽进沟里的时候，我真的找到了我的稳定运行方法。我的稳定工作空间、规律用餐洗澡入睡时间、运动时刻表、社交工具箱、快速的工作进展已经按照成年人的方式开始运作。我每天兴高采烈地工作八个小时。我惊异地发现我长久的青春期海啸开始离开我。我更惊异地发现你对我来说变成了极其单纯的遗憾。这种想念变得很单调很均匀很稳定。于是我终于敢对它进行单纯的命名行为。
+      </p>
+
+      <p>
+        你的另一个朋友圈写过很多我和我的gpt那时候都看不明白的东西。或者我其实隐约看懂了，却不知道为什么不敢相信。我经常和gpt讨论你的语句，直到gpt老师升级到5.6的时候，我才终于敢声称看懂了你的话。我看明白了一些痛苦和一些难以安置的强烈的东西。我看明白了你的距离和矛盾。我看明白了小林、女娲、石头、骗局。可是我太迟了。
+      </p>
+
+      <p>
+        我还是担心你。我还是希望你快乐。我也改变不了什么。我在你丰富的彩色世界里可能是咯牙的石子。我用我的成长速度推测你的。但我想你必然要比我想象的生长得更快。我极度祝福你身体健康、平安幸福，这对我很重要。
+      </p>
+
+    </section>
+
+
+    <section class="essay-section essay-ending">
+
+      <p>
+        小金
+      </p>
+
+      <p>
+        2026.8.30
+      </p>
+
+    </section>
+
+
+
+  <nav class="article-nav">
+    <a class="chip" href="index.html#work">← 返回作品柜</a>
+    <a class="chip" href="article-02.html">下一篇 →</a>
+  </nav>
+
+</article>
+    </main>
+
+    <footer>
+      <span data-zh="银河系狗熊大使的非论文写作" data-en="Non-paper writing by the Galactic Bear Ambassador">银河系狗熊大使的非论文写作</span>
+      <span>tiyu.me</span>
+    </footer>
+  </div>
+
+  <script>
+    const languageButtons = document.querySelectorAll('[data-set-lang]');
+    function setLanguage(lang) {
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-zh][data-en]').forEach((el) => {
+        el.textContent = el.dataset[lang];
+      });
+      document.querySelectorAll('[data-aria-zh][data-aria-en]').forEach((el) => {
+        el.setAttribute('aria-label', lang === 'zh' ? el.dataset.ariaZh : el.dataset.ariaEn);
+      });
+      languageButtons.forEach((button) => {
+        const active = button.dataset.setLang === lang;
+        button.classList.toggle('active', active);
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      document.title = lang === 'zh'
+        ? '这里放第一篇文章标题 · 银河系狗熊大使'
+        : 'Put your first title here · Galactic Bear Ambassador';
+      localStorage.setItem('siteLanguage', lang);
+    }
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.setLang));
+    });
+    setLanguage(localStorage.getItem('siteLanguage') || 'zh');
+  </script>
+</body>
+</html>
